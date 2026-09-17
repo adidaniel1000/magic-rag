@@ -21,3 +21,10 @@ POST requests must be JSON objects with a string `prompt` (omitting it uses an e
 string). Malformed requests return HTTP 400; bodies over 1 MiB return HTTP 413.
 Retrieval failures preserve the existing hook behavior: HTTP 200 with an explanatory
 message in `additionalContext`.
+
+If a client times out or cancels a request before receiving the response, the server
+logs `Client disconnected before the response was sent` and continues serving.
+The HTTP hook in `settings/settings.claude.http.json` has a five-second timeout;
+if retrieval takes longer on your machine, increase that value in your active hook
+configuration. A logged HTTP 200 records the response status, but does not guarantee
+the client received the response.
