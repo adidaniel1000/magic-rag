@@ -2,6 +2,7 @@ import sys
 import json
 import argparse
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import parse_qs, urlsplit
 
 from rag_core import PROJECT_ROOT, format_context, search
 
@@ -46,9 +47,26 @@ class RagHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def do_GET(self):
+        try:
+            url = urlsplit(self.path)
+            if url.path != "/rag":
+                self.send_json(404, {"error": "Use GET /rag?prompt=... or POST /rag"})
+                return
+            query = parse_qs(url.query, keep_blank_values=True)
+            result = run_rag({"prompt": query.get("prompt", [""])[0]})
+        except (ValueError, UnicodeDecodeError) as error:
+            self.send_json(400, {"error": str(error)})
+            return
+        except Exception:
+            self.log_error("RAG request failed")
+            self.send_json(500, {"error": "RAG request failed; check the server"})
+            return
+        self.send_json(200, result)
+
     def do_POST(self):
         if self.path != "/rag":
-            self.send_json(404, {"error": "Use POST /rag"})
+            self.send_json(404, {"error": "Use GET /rag?prompt=... or POST /rag"})
             return
         if self.headers.get("Transfer-Encoding"):
             self.send_json(400, {"error": "Use Content-Length instead of Transfer-Encoding"})
@@ -74,7 +92,7 @@ class RagHandler(BaseHTTPRequestHandler):
 
 def main():
     parser = argparse.ArgumentParser(description="Retrieve local RAG context via stdin or HTTP")
-    parser.add_argument("--serve", action="store_true", help="Serve POST /rag on localhost")
+    parser.add_argument("--serve", action="store_true", help="Serve GET and POST /rag on localhost")
     parser.add_argument("--port", type=int, default=8000, help="Local HTTP port (default: 8000)")
     args = parser.parse_args()
     if args.serve:
