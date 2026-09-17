@@ -1,2 +1,2 @@
-# MagicRag currently uses only the Python standard library.
-# Add third-party Python dependencies here when needed.
+# MCP server (the original HTTP and stdin hooks remain standard-library only).
+mcp>=2.2,<3
