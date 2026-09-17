@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "magic-rag": {
-      "command": "C:/projects/magic-rag/.venv/Scripts/python.exe",
-      "args": ["C:/projects/magic-rag/scripts/rag_mcp.py"]
-    }
-  }
-}
