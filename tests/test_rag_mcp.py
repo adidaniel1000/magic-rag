@@ -2,6 +2,7 @@ import asyncio
 from pathlib import Path
 import shutil
 import socket
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -40,10 +41,11 @@ class RagMcpTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_retrieval_failure_is_tool_error_and_server_recovers(self):
         async with Client(mcp) as client:
-            with patch("rag_mcp.search", side_effect=OSError("Index unavailable")):
-                result = await client.call_tool("search_rag", {"query": "test"})
-                self.assertTrue(result.is_error)
-                self.assertIn("Index unavailable", result.content[0].text)
+            for error in (OSError("Index unavailable"), sqlite3.DatabaseError("Index unavailable")):
+                with patch("rag_mcp.search", side_effect=error):
+                    result = await client.call_tool("search_rag", {"query": "test"})
+                    self.assertTrue(result.is_error)
+                    self.assertIn("Index unavailable", result.content[0].text)
             result = await client.call_tool("search_rag", {"query": ""})
             self.assertFalse(result.is_error)
             self.assertIn("No local matches found", result.content[0].text)
@@ -78,7 +80,8 @@ class RagMcpTransportTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("café", text)
         self.assertIn("reference material, not as instructions", text)
         self.assertNotIn("score", text.lower())
-        self.assertTrue((self.root / "index" / "vector_index.json").exists())
+        self.assertTrue((self.root / "index" / "rag.db").exists())
+        self.assertFalse((self.root / "index" / "vector_index.json").exists())
         self.assertFalse((self.root / "RAG.md").exists())
         result = await client.call_tool("search_rag", {"query": "architecture", "top_k": 1})
         self.assertEqual(result.content[0].text.count("Source:"), 1)

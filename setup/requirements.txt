@@ -1,2 +1,3 @@
-# MCP server (the original HTTP and stdin hooks remain standard-library only).
+# Local retrieval and MCP server. SQLite and FTS5 are bundled with Python.
+sqlite-vec==0.1.9
 mcp>=2.2,<3

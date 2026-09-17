@@ -1,7 +1,7 @@
 """Expose local RAG retrieval to MCP clients over stdio or Streamable HTTP."""
 
 import argparse
-from threading import Lock
+import sqlite3
 from typing import Annotated
 
 from mcp.server import MCPServer
@@ -10,10 +10,6 @@ from mcp.types import ToolAnnotations
 from pydantic import Field
 
 from rag_core import format_context, search
-
-
-# Concurrent first searches must not read an index another call is still writing.
-_search_lock = Lock()
 
 
 mcp = MCPServer(
@@ -50,12 +46,11 @@ def search_rag(
     searches without matches return an explicit no-matches message.
     """
     try:
-        with _search_lock:
-            matches = search(query, top_k=top_k, min_score=min_score)
-    except (OSError, ValueError) as error:
+        matches = search(query, top_k=top_k, min_score=min_score)
+    except (OSError, ValueError, sqlite3.Error) as error:
         raise ToolError(
             f"Local RAG retrieval failed: {error}. Check file access and rebuild "
-            "the index with scripts/index_rag.py."
+            "the index with build_index.bat."
         ) from error
     return format_context(matches) or "<RAG_CONTEXT>\nNo local matches found.\n</RAG_CONTEXT>"
 

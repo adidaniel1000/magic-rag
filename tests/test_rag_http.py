@@ -2,11 +2,18 @@ import io
 import json
 from pathlib import Path
 import sys
+import sqlite3
+import tempfile
+from threading import Thread
+from http.server import HTTPServer
+from urllib.request import Request, urlopen
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
+import rag
+import rag_core
 from rag import RagHandler
 
 
@@ -66,6 +73,43 @@ class RagResponseTests(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             handler.send_json(200, {"invalid": object()})
+
+
+class RagHookIntegrationTests(unittest.TestCase):
+    def test_get_post_and_database_error_preserve_hook_contract(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            raw = root / "raw"
+            raw.mkdir()
+            (raw / "guide.txt").write_text("Architecture uses SQLite search.", encoding="utf-8")
+            with patch.object(rag, "PROJECT_ROOT", root), \
+                 patch.object(rag_core, "PROJECT_ROOT", root), \
+                 patch.object(rag_core, "RAW_DIR", raw), \
+                 patch.object(rag_core, "INDEX_PATH", root / "index" / "rag.db"), \
+                 HTTPServer(("127.0.0.1", 0), RagHandler) as server:
+                thread = Thread(target=server.serve_forever, daemon=True)
+                thread.start()
+                url = f"http://127.0.0.1:{server.server_port}/rag"
+                try:
+                    for request in (
+                        url + "?prompt=architecture",
+                        Request(url, data=b'{"prompt":"architecture"}', headers={"Content-Type": "application/json"}),
+                    ):
+                        with urlopen(request, timeout=10) as response:
+                            self.assertEqual(response.status, 200)
+                            result = json.load(response)["hookSpecificOutput"]
+                            self.assertEqual(result["hookEventName"], "UserPromptSubmit")
+                            self.assertIn("raw/guide.txt#chunk-1", result["additionalContext"])
+                    self.assertIn("SQLite", (root / "RAG.md").read_text(encoding="utf-8"))
+                    with patch.object(rag, "search", side_effect=sqlite3.DatabaseError("broken database")):
+                        with urlopen(url + "?prompt=architecture", timeout=10) as response:
+                            self.assertEqual(response.status, 200)
+                            self.assertIn("retrieval failed", json.load(response)["hookSpecificOutput"]["additionalContext"])
+                    with urlopen(url + "?prompt=zzzzunmatched", timeout=10) as response:
+                        self.assertEqual(json.load(response)["hookSpecificOutput"]["additionalContext"], "")
+                finally:
+                    server.shutdown()
+                    thread.join(timeout=10)
 
 
 if __name__ == "__main__":

@@ -8,15 +8,20 @@ It searches the existing local index and returns a `<RAG_CONTEXT>` block with
 excerpts and source paths. The MCP client decides when to call the tool; it does
 not automatically run on every prompt like a hook.
 
-Install once with Python 3.10+ from the project directory:
+Install once with a Windows Python installation that includes SQLite 3.41+ and
+FTS5 (current Python 3.12+ installations are suitable). From the project directory:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\setup\setup.bat
+.\build_index.bat
 ```
 
+Setup creates `index/.venv/`, installs the pinned SQLite vector extension and MCP
+dependencies there, and checks FTS5 and vector operations. Python supplies SQLite;
+no database server is required. Setup can be rerun and does not rebuild documents.
+
 For a local MCP client, merge the `mcpServers` entry in
-[`settings/mcp.stdio.json`](settings/mcp.stdio.json) into its MCP configuration
+[`mcp.stdio.json`](../setup/user_setup/mcp.stdio.json) into its MCP configuration
 (for Claude Code, the project's `.mcp.json`). Adjust the absolute paths if the
 project is elsewhere. The client launches and stops the server automatically.
 The server works regardless of the client's working directory. The Python entry
@@ -25,7 +30,7 @@ protocol output. To use stdio through the batch launcher, run
 `startMagicRagMcp.bat --transport stdio`.
 
 For **Claude Desktop on Windows**, merge the entry from
-[`settings/mcp.stdio.json`](settings/mcp.stdio.json) into
+[`mcp.stdio.json`](../setup/user_setup/mcp.stdio.json) into
 `%APPDATA%\Claude\claude_desktop_config.json`, preserving any existing servers,
 then fully quit and reopen Claude Desktop. Claude launches the Python server
 itself; you do not need to run the batch launcher.
@@ -43,7 +48,7 @@ For Streamable HTTP, start:
 .\startMagicRagMcp.bat
 ```
 
-Then use [`settings/mcp.http.json`](settings/mcp.http.json), or connect an MCP
+Then use the [HTTP MCP example](../setup/user_setup/claude_code_mcp/.claude/.mcp.json), or connect an MCP
 client to `http://127.0.0.1:8001/mcp`. This endpoint listens only on this computer
 and is separate from the existing `/rag` hook API. The batch launcher defaults
 to Streamable HTTP on port 8001; pass `--port 9000` to change the port, and update
@@ -55,12 +60,34 @@ from 1 to 20, and `min_score` must be between 0 and 1. Blank queries or no match
 return an explicit no-matches message. Invalid arguments and retrieval failures
 return MCP errors. MCP searches do not write `RAG.md`.
 
-Place `.md`, `.txt`, or `.json` documents in `raw/`. The index is built on the first
-nonblank search if missing. After editing source documents, rebuild it:
+Place `.md`, `.txt`, or `.json` documents in `raw/`. The database is `index/rag.db`.
+It is built on the first searchable query if missing; an explicit build avoids
+making that first request wait. After adding, editing, or deleting source documents,
+rebuild it:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/index_rag.py
+.\build_index.bat
 ```
 
-Run the test suite with `.\.venv\Scripts\python.exe -m unittest discover -s tests -v`.
+The build prints progress to stderr and a JSON summary to stdout. It reads documents
+one at a time and inserts chunks in batches. Rebuilds are atomic: existing readers
+continue seeing the previous index until the new one commits, and a failed rebuild
+rolls back. SQLite's `rag.db-wal` and `rag.db-shm` sidecar files may exist while it is
+in use. Keep the live database on local storage.
 
+FTS5 indexes distinct normalized words from each chunk and source path. Searches
+score all keyword-matching chunks using `sqlite-vec` cosine similarity, retaining
+the original 75% vector / 25% query-word-overlap formula and minimum score. There is
+no candidate cap. Broad queries can take longer because more vectors qualify.
+Only the selected excerpt text is returned to Python. The embeddings remain hashed
+word counts; this migration does not introduce a semantic embedding model.
+Float32 storage can cause tiny score differences, including near-ties or results
+exactly on a score threshold.
+
+The former `index/vector_index.json` is retained but is no longer read or updated.
+Source edits require a full rebuild; there is no background file watcher.
+
+Run tests with `index\.venv\Scripts\python.exe -m unittest discover -s tests -v`.
+Run `index\.venv\Scripts\python.exe scripts/benchmark_rag.py` for repeatable
+fresh-process and warm query timings; it uses the existing database and never
+rebuilds it.

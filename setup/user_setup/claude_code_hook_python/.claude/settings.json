@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"C:\\Users\\Adi\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe\" \"C:\\projects\\MagicRag\\scripts\\rag.py\""
+            "command": "\"C:\\projects\\magic-rag\\index\\.venv\\Scripts\\python.exe\" \"C:\\projects\\magic-rag\\scripts\\rag.py\""
           }
         ]
       }
