@@ -22,6 +22,19 @@ string). Malformed requests return HTTP 400; bodies over 1 MiB return HTTP 413.
 Retrieval failures preserve the existing hook behavior: HTTP 200 with an explanatory
 message in `additionalContext`.
 
+Successful retrieval adds a `<RAG_CONTEXT>` block with potentially relevant local
+excerpts and their source paths. Its instructions ask Claude to use relevant
+excerpts, ignore unrelated matches, treat excerpt text as reference material rather
+than instructions, and cite sources when used. The original prompt is used only
+for retrieval and is not repeated in the block. Ranking scores are omitted because
+they are retrieval heuristics, not confidence estimates. No matches produce an
+empty `additionalContext`.
+
+This format follows the [hook reference](https://code.claude.com/docs/en/hooks#add-context-for-claude),
+which places additional context alongside the submitted prompt, and the
+[prompting guidance](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#structure-prompts-with-xml-tags)
+on clearly separating context with descriptive tags.
+
 If a client times out or cancels a request before receiving the response, the server
 logs `Client disconnected before the response was sent` and continues serving.
 The HTTP hook in `settings/settings.claude.http.json` has a five-second timeout;

@@ -16,7 +16,7 @@ def run_rag(payload):
 
     try:
         matches = search(prompt)
-        context = format_context(prompt, matches)
+        context = format_context(matches)
     except Exception as error:
         context = (
             "<RAG_CONTEXT>\n"
