@@ -11,17 +11,7 @@ Keep the terminal open; press Ctrl+C to stop the server. It listens only on this
 
 To test from a browser, open:
 
-[http://127.0.0.1:8000/rag?prompt=What%20is%20the%20color%20of%20a%20Deadrunner%3F](http://127.0.0.1:8000/rag?prompt=What%20is%20the%20color%20of%20a%20Deadrunner%3F)
-
-GET reads `prompt` from the URL query string. Opening `/rag` without a prompt uses
-an empty string. Restart an already running server after updating the code.
-
-Call it from another terminal:
-
-```powershell
-$result = Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8000/rag" -ContentType "application/json" -Body '{"prompt":"How do I make pasta?"}'
-$result.hookSpecificOutput.additionalContext
-```
+[http://127.0.0.1:8000/rag?prompt=Hello](http://127.0.0.1:8000/rag?prompt=Hello)
 
 The endpoint returns the same JSON hook response as the stdin command and updates
 `RAG.md` in the project directory. `settings.http.json` points to this local endpoint;
