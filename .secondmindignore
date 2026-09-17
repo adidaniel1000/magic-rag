@@ -1,0 +1,10 @@
+# Keep the project knowledge folder focused on source and documentation.
+# The legacy corpus remains opt-in and is not indexed with this project.
+/raw/
+/index/
+/.backup/
+/.secondmind-test/
+/artifacts/
+/test-results/
+/public/releases/
+/package-lock.json

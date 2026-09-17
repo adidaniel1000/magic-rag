@@ -221,3 +221,12 @@ __marimo__/
 raw/
 index/
 RAG.md
+node_modules/
+.secondmind-test/
+playwright-report/
+test-results/
+artifacts/
+*.tgz
+!public/releases/*.tgz
+
+node_modules

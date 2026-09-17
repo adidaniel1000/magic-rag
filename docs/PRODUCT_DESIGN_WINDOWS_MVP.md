@@ -1,10 +1,27 @@
 # Second Mind — Product & Technical Design
 
-**Status:** Implementation specification  
-**Audience:** Engineering / Codex implementation agent  
-**Version:** 0.1  
-**Date:** 2026-09-18  
+**Status:** Windows beta implemented; live hosted-connector acceptance pending
+**Audience:** Engineering / Codex implementation agent
+**Version:** 0.2
+**Date:** 2026-09-18
 **Working name:** Second Mind
+
+## Approved implementation decisions — 2026-09-18
+
+These decisions supersede older examples and future enterprise material below.
+
+- Replace the Python prototype with the TypeScript workspace, React UI, local service and thin MCP adapters. Preserve existing raw documents, legacy databases and Python environments.
+- Windows 11 x64 / Node.js 24.12+ (Node 24). The service remains in the foreground terminal. Browser closure does not stop it; stopping the service stops its managed tunnel. No login autostart.
+- Local-only knowledge and indexes. No cloud index, accounts, tenancy, SSO or built-in synchronization. Earlier tenant/ACL examples are future design notes, not MVP requirements.
+- SQLite/FTS5/sqlite-vec with migrations, and a pinned quantized English MiniLM model through Transformers.js. Download the model once, verify SHA-256, then load only local files.
+- Local browser/administration on loopback port 32187; separate authenticated Streamable HTTP MCP gateway on loopback port 32188, exposed optionally through an existing Cloudflare named tunnel.
+- The user creates Cloudflare resources and supplies the hostname/token. The application manages tunnel start/stop/status and protects credentials with Windows DPAPI. The tunnel exposes only retrieval and OAuth routes.
+- Remote web clients use OAuth authorization code + PKCE, dynamic registration, and local approval of a matching code and selected folders. Developer clients may use revocable bearer tokens. Changing the public hostname invalidates remote grants.
+- Installation is a one-line PowerShell command against a configurable HTTPS setup host. The `public/` folder contains all static Cloudflare Pages setup files, the package, release manifest and checksums. Hosting is separate from the retrieval tunnel. No public npm publication is needed.
+- The setup hostname will be configured later. The release command inserts it; an unconfigured installer refuses to run.
+- Default knowledge/code context budgets are 3000/2500 reference tokens. No portable configuration is written into source folders by default.
+
+Current implementation, commands, boundaries and verification are documented in [README](../README.md), [architecture](architecture.md), [security](security.md), [integrations](integrations.md), and [verification](verification.md).
 
 ---
 
@@ -178,18 +195,9 @@ No critical retrieval logic may live exclusively inside:
 
 ## 3.2 Cross-Device
 
-The canonical index MUST live in a cloud-accessible backend.
+The canonical source is the user's raw folder. Every installation creates its own disposable local index. Existing file-sync products may synchronize raw files; live index databases must not be synchronized.
 
-A user who connects Second Mind once should be able to access the same indexed knowledge from:
-
-- desktop;
-- laptop;
-- browser;
-- mobile;
-- coding agent;
-- future supported LLM clients.
-
-Local folders may require a synchronization/indexing agent, but the resulting searchable representation should be available in the cloud unless the customer explicitly selects an on-prem/private deployment mode.
+Authorized remote AI clients may query a running Windows installation through its optional HTTPS tunnel. This exposes bounded retrieval, not a cloud copy of the index. The computer and foreground service must remain running.
 
 ---
 
@@ -223,8 +231,8 @@ Normal users should not need to understand:
 
 The intended onboarding is:
 
-1. Create an account.
-2. Connect knowledge sources.
+1. Run the one-line installer or the installed `secondmind` command.
+2. Select local knowledge folders.
 3. Wait for indexing.
 4. Connect Second Mind to an AI application.
 5. Ask normal questions.
@@ -720,15 +728,9 @@ Such hooks are optimizations, not product foundations.
 
 ## 8.4 Cloud-Only LLM Clients
 
-Some cloud/web clients may not directly support local MCP.
+Cloud/web clients connect to the authenticated Streamable HTTP MCP gateway through the user's existing Cloudflare named tunnel. OAuth approval occurs in the local Windows UI. The app also supports scoped, revocable bearer tokens for developer clients.
 
-Support for those clients may require:
-
-- a vendor-supported local/private tunnel;
-- a future Second Mind bridge;
-- another platform-specific adapter.
-
-This is not required to compromise the local-first storage model.
+Only retrieval and OAuth endpoints are exposed. Folder management and client configuration stay on a separate local-only port. The index remains on the Windows computer.
 
 ---
 
@@ -953,6 +955,14 @@ Avoid decisions that would require rewriting the core in Swift or Objective-C.
 
 Avoid a traditional signed `.exe` installer for the technical MVP.
 
+The approved default installation is:
+
+```powershell
+powershell -c "irm https://YOUR-SETUP-HOST/install.ps1 | iex"
+```
+
+Build the configurable installer and package with `npm run release -- --base-url https://YOUR-SETUP-HOST`, then deploy `public/` to Cloudflare Pages. Setup installs a compatible per-user Node runtime when necessary and the checksummed npm archive without publishing to the npm registry. The npm commands below describe the underlying package interface, not a requirement to reserve a public package name.
+
 Preferred:
 
 ```bash
@@ -1069,6 +1079,8 @@ The React UI calls the local service; it does not attempt to implement OS access
 # 12. Data Model
 
 ## 12.1 Tenant
+
+Future managed edition only. The local MVP has one OS-user owner and source-scoped remote grants, without tenant records or SaaS accounts. Tenant/user/ACL examples in this section are not required local schema.
 
 ```text
 Tenant
@@ -1729,6 +1741,8 @@ GET /api/v1/documents/{id}
 
 ## 24.4 Upload
 
+Future edition only; the local MVP registers folders and does not accept file uploads.
+
 ```http
 POST /api/v1/uploads
 ```
@@ -2161,7 +2175,7 @@ The local web UI is protected as a localhost application using an installation-s
 
 MCP access is local through `stdio` or authenticated local IPC.
 
-Future cloud/tunnel integrations may add OAuth/account authentication without changing the local retrieval core.
+The optional HTTPS tunnel uses OAuth approval on the Windows PC, or scoped bearer tokens, without introducing cloud accounts or changing the retrieval core.
 
 ---
 
@@ -2193,7 +2207,7 @@ Symlink/junction handling must be explicit and must not silently escape the conf
 
 # 36. Encryption and Sensitive Data
 
-Required:
+Future managed/cloud deployment requirements:
 
 - TLS in transit;
 - encrypted database volumes;
@@ -2201,6 +2215,8 @@ Required:
 - secrets in secret manager;
 - access-token encryption;
 - no tokens in logs.
+
+For the local MVP, Windows filesystem permissions and optional OS disk encryption protect derived data. DPAPI protects installation, tunnel and confidential-client secrets. The optional public gateway uses HTTPS via Cloudflare and never logs tokens. Cloud object storage and a hosted secret manager are not local MVP dependencies.
 
 Provide configuration to disable query-text retention.
 

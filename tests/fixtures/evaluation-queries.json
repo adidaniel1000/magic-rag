@@ -1,0 +1,2102 @@
+[
+  {
+    "category": "personal",
+    "query": "What support is available after becoming a parent?",
+    "expected_documents": [
+      "personal/parent-notes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about paid time off after adopting a child.",
+    "expected_documents": [
+      "personal/parent-notes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Parental leave notes: What support is available after becoming a parent?",
+    "expected_documents": [
+      "personal/parent-notes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains paid time off after adopting a child.",
+    "expected_documents": [
+      "personal/parent-notes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Parental leave notes.",
+    "expected_documents": [
+      "personal/parent-notes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How should I care for the basil on my balcony?",
+    "expected_documents": [
+      "personal/garden.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about watering potted herbs.",
+    "expected_documents": [
+      "personal/garden.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Balcony garden: How should I care for the basil on my balcony?",
+    "expected_documents": [
+      "personal/garden.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains watering potted herbs.",
+    "expected_documents": [
+      "personal/garden.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Balcony garden.",
+    "expected_documents": [
+      "personal/garden.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What camera equipment should I pack for wildlife photography?",
+    "expected_documents": [
+      "personal/camera.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about telephoto lens travel equipment.",
+    "expected_documents": [
+      "personal/camera.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Camera kit: What camera equipment should I pack for wildlife photography?",
+    "expected_documents": [
+      "personal/camera.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains telephoto lens travel equipment.",
+    "expected_documents": [
+      "personal/camera.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Camera kit.",
+    "expected_documents": [
+      "personal/camera.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "When is my sourdough starter ready to bake?",
+    "expected_documents": [
+      "personal/sourdough.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about feeding a bread starter.",
+    "expected_documents": [
+      "personal/sourdough.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Sourdough starter: When is my sourdough starter ready to bake?",
+    "expected_documents": [
+      "personal/sourdough.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains feeding a bread starter.",
+    "expected_documents": [
+      "personal/sourdough.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Sourdough starter.",
+    "expected_documents": [
+      "personal/sourdough.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What maintenance does my bicycle need after a rainy ride?",
+    "expected_documents": [
+      "personal/cycling.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about bicycle chain lubrication.",
+    "expected_documents": [
+      "personal/cycling.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Bicycle maintenance: What maintenance does my bicycle need after a rainy ride?",
+    "expected_documents": [
+      "personal/cycling.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains bicycle chain lubrication.",
+    "expected_documents": [
+      "personal/cycling.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Bicycle maintenance.",
+    "expected_documents": [
+      "personal/cycling.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What should I bring for an overnight camping trip?",
+    "expected_documents": [
+      "personal/camping.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about tent sleeping bag outdoor checklist.",
+    "expected_documents": [
+      "personal/camping.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Camping checklist: What should I bring for an overnight camping trip?",
+    "expected_documents": [
+      "personal/camping.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains tent sleeping bag outdoor checklist.",
+    "expected_documents": [
+      "personal/camping.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Camping checklist.",
+    "expected_documents": [
+      "personal/camping.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How did I plan to practice Spanish each day?",
+    "expected_documents": [
+      "personal/language.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about Spanish vocabulary spaced repetition.",
+    "expected_documents": [
+      "personal/language.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Language practice: How did I plan to practice Spanish each day?",
+    "expected_documents": [
+      "personal/language.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains Spanish vocabulary spaced repetition.",
+    "expected_documents": [
+      "personal/language.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Language practice.",
+    "expected_documents": [
+      "personal/language.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "When do I need to renew a borrowed library book?",
+    "expected_documents": [
+      "personal/library.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about library renewal and due dates.",
+    "expected_documents": [
+      "personal/library.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Book borrowing: When do I need to renew a borrowed library book?",
+    "expected_documents": [
+      "personal/library.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains library renewal and due dates.",
+    "expected_documents": [
+      "personal/library.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Book borrowing.",
+    "expected_documents": [
+      "personal/library.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What ratio do I use for pour-over coffee?",
+    "expected_documents": [
+      "personal/coffee.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about coffee bloom and water ratio.",
+    "expected_documents": [
+      "personal/coffee.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Coffee brewing: What ratio do I use for pour-over coffee?",
+    "expected_documents": [
+      "personal/coffee.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains coffee bloom and water ratio.",
+    "expected_documents": [
+      "personal/coffee.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Coffee brewing.",
+    "expected_documents": [
+      "personal/coffee.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What preparations are needed before moving out of my apartment?",
+    "expected_documents": [
+      "personal/moving.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about moving elevator reservation meter readings.",
+    "expected_documents": [
+      "personal/moving.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Apartment move: What preparations are needed before moving out of my apartment?",
+    "expected_documents": [
+      "personal/moving.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains moving elevator reservation meter readings.",
+    "expected_documents": [
+      "personal/moving.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Apartment move.",
+    "expected_documents": [
+      "personal/moving.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "When should I arrive for the coastal train?",
+    "expected_documents": [
+      "personal/travel.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about Central Station departure reservation.",
+    "expected_documents": [
+      "personal/travel.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Rail itinerary: When should I arrive for the coastal train?",
+    "expected_documents": [
+      "personal/travel.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains Central Station departure reservation.",
+    "expected_documents": [
+      "personal/travel.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Rail itinerary.",
+    "expected_documents": [
+      "personal/travel.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How do I prepare paper for a watercolor wash?",
+    "expected_documents": [
+      "personal/painting.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about watercolor cold press paper technique.",
+    "expected_documents": [
+      "personal/painting.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Watercolor notes: How do I prepare paper for a watercolor wash?",
+    "expected_documents": [
+      "personal/painting.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains watercolor cold press paper technique.",
+    "expected_documents": [
+      "personal/painting.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Watercolor notes.",
+    "expected_documents": [
+      "personal/painting.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How should I structure my piano practice?",
+    "expected_documents": [
+      "personal/music.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about metronome and difficult piano passages.",
+    "expected_documents": [
+      "personal/music.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Piano routine: How should I structure my piano practice?",
+    "expected_documents": [
+      "personal/music.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains metronome and difficult piano passages.",
+    "expected_documents": [
+      "personal/music.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Piano routine.",
+    "expected_documents": [
+      "personal/music.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How do I back up my personal photographs?",
+    "expected_documents": [
+      "personal/backup.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about photo archive external drive restore.",
+    "expected_documents": [
+      "personal/backup.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Photo archive: How do I back up my personal photographs?",
+    "expected_documents": [
+      "personal/backup.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains photo archive external drive restore.",
+    "expected_documents": [
+      "personal/backup.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Photo archive.",
+    "expected_documents": [
+      "personal/backup.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How should I prepare cotton for sewing?",
+    "expected_documents": [
+      "personal/sewing.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about cotton prewash seam allowance.",
+    "expected_documents": [
+      "personal/sewing.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Sewing project: How should I prepare cotton for sewing?",
+    "expected_documents": [
+      "personal/sewing.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains cotton prewash seam allowance.",
+    "expected_documents": [
+      "personal/sewing.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Sewing project.",
+    "expected_documents": [
+      "personal/sewing.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What is the plan for bad weather on the ridge hike?",
+    "expected_documents": [
+      "personal/hiking.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about mountain trail storm turnaround.",
+    "expected_documents": [
+      "personal/hiking.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Mountain route: What is the plan for bad weather on the ridge hike?",
+    "expected_documents": [
+      "personal/hiking.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains mountain trail storm turnaround.",
+    "expected_documents": [
+      "personal/hiking.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Mountain route.",
+    "expected_documents": [
+      "personal/hiking.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How did I arrange my home workstation?",
+    "expected_documents": [
+      "personal/desk.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about monitor position and keyboard desk setup.",
+    "expected_documents": [
+      "personal/desk.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Home desk: How did I arrange my home workstation?",
+    "expected_documents": [
+      "personal/desk.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains monitor position and keyboard desk setup.",
+    "expected_documents": [
+      "personal/desk.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Home desk.",
+    "expected_documents": [
+      "personal/desk.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How much time should I allow for the sculpture gallery?",
+    "expected_documents": [
+      "personal/museum.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about museum timed tickets opening time.",
+    "expected_documents": [
+      "personal/museum.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Museum visit: How much time should I allow for the sculpture gallery?",
+    "expected_documents": [
+      "personal/museum.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains museum timed tickets opening time.",
+    "expected_documents": [
+      "personal/museum.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Museum visit.",
+    "expected_documents": [
+      "personal/museum.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "How do I make the red lentil soup?",
+    "expected_documents": [
+      "personal/recipes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about lentils carrots cumin soup recipe.",
+    "expected_documents": [
+      "personal/recipes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Lentil soup: How do I make the red lentil soup?",
+    "expected_documents": [
+      "personal/recipes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains lentils carrots cumin soup recipe.",
+    "expected_documents": [
+      "personal/recipes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Lentil soup.",
+    "expected_documents": [
+      "personal/recipes.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "What gift did I plan for Maya?",
+    "expected_documents": [
+      "personal/gifts.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Find information about Maya birthday botanical sketchbook.",
+    "expected_documents": [
+      "personal/gifts.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Birthday gift notes: What gift did I plan for Maya?",
+    "expected_documents": [
+      "personal/gifts.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "I need the source that explains Maya birthday botanical sketchbook.",
+    "expected_documents": [
+      "personal/gifts.md"
+    ]
+  },
+  {
+    "category": "personal",
+    "query": "Locate Birthday gift notes.",
+    "expected_documents": [
+      "personal/gifts.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Why did we choose annual invoicing for enterprise customers?",
+    "expected_documents": [
+      "enterprise/annual-pricing.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about prepaid subscription annual discount.",
+    "expected_documents": [
+      "enterprise/annual-pricing.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Enterprise annual pricing: Why did we choose annual invoicing for enterprise customers?",
+    "expected_documents": [
+      "enterprise/annual-pricing.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains prepaid subscription annual discount.",
+    "expected_documents": [
+      "enterprise/annual-pricing.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Enterprise annual pricing.",
+    "expected_documents": [
+      "enterprise/annual-pricing.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Who coordinates a production checkout outage?",
+    "expected_documents": [
+      "enterprise/incidents.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about severity one incident commander updates.",
+    "expected_documents": [
+      "enterprise/incidents.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Incident response: Who coordinates a production checkout outage?",
+    "expected_documents": [
+      "enterprise/incidents.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains severity one incident commander updates.",
+    "expected_documents": [
+      "enterprise/incidents.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Incident response.",
+    "expected_documents": [
+      "enterprise/incidents.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "How do contractors obtain temporary repository permissions?",
+    "expected_documents": [
+      "enterprise/access.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about contractor access expiration approval.",
+    "expected_documents": [
+      "enterprise/access.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Access requests: How do contractors obtain temporary repository permissions?",
+    "expected_documents": [
+      "enterprise/access.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains contractor access expiration approval.",
+    "expected_documents": [
+      "enterprise/access.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Access requests.",
+    "expected_documents": [
+      "enterprise/access.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "What must accompany a travel reimbursement request?",
+    "expected_documents": [
+      "enterprise/expenses.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about expense report receipts project code.",
+    "expected_documents": [
+      "enterprise/expenses.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Travel reimbursements: What must accompany a travel reimbursement request?",
+    "expected_documents": [
+      "enterprise/expenses.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains expense report receipts project code.",
+    "expected_documents": [
+      "enterprise/expenses.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Travel reimbursements.",
+    "expected_documents": [
+      "enterprise/expenses.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "How long may customer exports be retained?",
+    "expected_documents": [
+      "enterprise/retention.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about customer export deletion schedule.",
+    "expected_documents": [
+      "enterprise/retention.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Customer data retention: How long may customer exports be retained?",
+    "expected_documents": [
+      "enterprise/retention.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains customer export deletion schedule.",
+    "expected_documents": [
+      "enterprise/retention.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Customer data retention.",
+    "expected_documents": [
+      "enterprise/retention.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "What approvals are required before a production release?",
+    "expected_documents": [
+      "enterprise/release.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about deployment review integration tests freeze.",
+    "expected_documents": [
+      "enterprise/release.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Release approvals: What approvals are required before a production release?",
+    "expected_documents": [
+      "enterprise/release.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains deployment review integration tests freeze.",
+    "expected_documents": [
+      "enterprise/release.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Release approvals.",
+    "expected_documents": [
+      "enterprise/release.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "What happens on a new employee’s first day?",
+    "expected_documents": [
+      "enterprise/onboarding.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about new hire laptop security key buddy.",
+    "expected_documents": [
+      "enterprise/onboarding.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "New employee onboarding: What happens on a new employee’s first day?",
+    "expected_documents": [
+      "enterprise/onboarding.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains new hire laptop security key buddy.",
+    "expected_documents": [
+      "enterprise/onboarding.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate New employee onboarding.",
+    "expected_documents": [
+      "enterprise/onboarding.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Which checks apply to vendors handling personal data?",
+    "expected_documents": [
+      "enterprise/vendors.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about vendor security review data processing agreement.",
+    "expected_documents": [
+      "enterprise/vendors.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Vendor assessment: Which checks apply to vendors handling personal data?",
+    "expected_documents": [
+      "enterprise/vendors.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains vendor security review data processing agreement.",
+    "expected_documents": [
+      "enterprise/vendors.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Vendor assessment.",
+    "expected_documents": [
+      "enterprise/vendors.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "When should support escalate a failed payment?",
+    "expected_documents": [
+      "enterprise/support.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about billing specialist transaction escalation.",
+    "expected_documents": [
+      "enterprise/support.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Support escalation: When should support escalate a failed payment?",
+    "expected_documents": [
+      "enterprise/support.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains billing specialist transaction escalation.",
+    "expected_documents": [
+      "enterprise/support.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Support escalation.",
+    "expected_documents": [
+      "enterprise/support.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "How should major navigation changes be validated?",
+    "expected_documents": [
+      "enterprise/design.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about navigation usability review five users.",
+    "expected_documents": [
+      "enterprise/design.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Design review: How should major navigation changes be validated?",
+    "expected_documents": [
+      "enterprise/design.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains navigation usability review five users.",
+    "expected_documents": [
+      "enterprise/design.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Design review.",
+    "expected_documents": [
+      "enterprise/design.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "When should interview feedback be submitted?",
+    "expected_documents": [
+      "enterprise/hiring.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about hiring debrief independent role rubric.",
+    "expected_documents": [
+      "enterprise/hiring.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Interview feedback: When should interview feedback be submitted?",
+    "expected_documents": [
+      "enterprise/hiring.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains hiring debrief independent role rubric.",
+    "expected_documents": [
+      "enterprise/hiring.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Interview feedback.",
+    "expected_documents": [
+      "enterprise/hiring.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "How do distributed teams coordinate across time zones?",
+    "expected_documents": [
+      "enterprise/remote-work.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about remote work collaboration window asynchronous.",
+    "expected_documents": [
+      "enterprise/remote-work.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Remote working hours: How do distributed teams coordinate across time zones?",
+    "expected_documents": [
+      "enterprise/remote-work.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains remote work collaboration window asynchronous.",
+    "expected_documents": [
+      "enterprise/remote-work.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Remote working hours.",
+    "expected_documents": [
+      "enterprise/remote-work.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "When should account managers start renewal discussions?",
+    "expected_documents": [
+      "enterprise/renewal.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about contract renewal sixty day outreach.",
+    "expected_documents": [
+      "enterprise/renewal.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Renewal outreach: When should account managers start renewal discussions?",
+    "expected_documents": [
+      "enterprise/renewal.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains contract renewal sixty day outreach.",
+    "expected_documents": [
+      "enterprise/renewal.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Renewal outreach.",
+    "expected_documents": [
+      "enterprise/renewal.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Where should a suspected vulnerability be reported?",
+    "expected_documents": [
+      "enterprise/security-report.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about security intake vulnerability triage.",
+    "expected_documents": [
+      "enterprise/security-report.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Vulnerability reports: Where should a suspected vulnerability be reported?",
+    "expected_documents": [
+      "enterprise/security-report.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains security intake vulnerability triage.",
+    "expected_documents": [
+      "enterprise/security-report.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Vulnerability reports.",
+    "expected_documents": [
+      "enterprise/security-report.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "What belongs in an architectural decision record?",
+    "expected_documents": [
+      "enterprise/meeting.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about architecture alternatives consequences ADR.",
+    "expected_documents": [
+      "enterprise/meeting.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Decision records: What belongs in an architectural decision record?",
+    "expected_documents": [
+      "enterprise/meeting.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains architecture alternatives consequences ADR.",
+    "expected_documents": [
+      "enterprise/meeting.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Decision records.",
+    "expected_documents": [
+      "enterprise/meeting.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Can the learning budget pay for conferences?",
+    "expected_documents": [
+      "enterprise/training.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about training books conference manager approval.",
+    "expected_documents": [
+      "enterprise/training.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Learning budget: Can the learning budget pay for conferences?",
+    "expected_documents": [
+      "enterprise/training.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains training books conference manager approval.",
+    "expected_documents": [
+      "enterprise/training.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Learning budget.",
+    "expected_documents": [
+      "enterprise/training.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "When are product strings frozen for localization?",
+    "expected_documents": [
+      "enterprise/localization.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about multilingual release native speaker translation.",
+    "expected_documents": [
+      "enterprise/localization.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Localization review: When are product strings frozen for localization?",
+    "expected_documents": [
+      "enterprise/localization.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains multilingual release native speaker translation.",
+    "expected_documents": [
+      "enterprise/localization.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Localization review.",
+    "expected_documents": [
+      "enterprise/localization.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "What triggers additional infrastructure capacity?",
+    "expected_documents": [
+      "enterprise/capacity.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about peak request sustained utilization headroom.",
+    "expected_documents": [
+      "enterprise/capacity.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Capacity planning: What triggers additional infrastructure capacity?",
+    "expected_documents": [
+      "enterprise/capacity.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains peak request sustained utilization headroom.",
+    "expected_documents": [
+      "enterprise/capacity.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Capacity planning.",
+    "expected_documents": [
+      "enterprise/capacity.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Who can approve a duplicate-charge refund?",
+    "expected_documents": [
+      "enterprise/refund.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about refund duplicate transaction finance credit.",
+    "expected_documents": [
+      "enterprise/refund.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Refund policy: Who can approve a duplicate-charge refund?",
+    "expected_documents": [
+      "enterprise/refund.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains refund duplicate transaction finance credit.",
+    "expected_documents": [
+      "enterprise/refund.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Refund policy.",
+    "expected_documents": [
+      "enterprise/refund.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "How should quarterly audit evidence be organized?",
+    "expected_documents": [
+      "enterprise/records.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Find information about audit control evidence owner review date.",
+    "expected_documents": [
+      "enterprise/records.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Audit evidence: How should quarterly audit evidence be organized?",
+    "expected_documents": [
+      "enterprise/records.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "I need the source that explains audit control evidence owner review date.",
+    "expected_documents": [
+      "enterprise/records.md"
+    ]
+  },
+  {
+    "category": "enterprise",
+    "query": "Locate Audit evidence.",
+    "expected_documents": [
+      "enterprise/records.md"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where is invoice settlement retry delay calculated?",
+    "expected_documents": [
+      "code/retry.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about exponential backoff settlement retries.",
+    "expected_documents": [
+      "code/retry.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "computeRetryDelay: Where is invoice settlement retry delay calculated?",
+    "expected_documents": [
+      "code/retry.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains exponential backoff settlement retries.",
+    "expected_documents": [
+      "code/retry.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate computeRetryDelay.",
+    "expected_documents": [
+      "code/retry.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "What prevents a duplicate payment capture?",
+    "expected_documents": [
+      "code/idempotency.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about payment idempotency duplicate charge key.",
+    "expected_documents": [
+      "code/idempotency.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "claimPaymentKey: What prevents a duplicate payment capture?",
+    "expected_documents": [
+      "code/idempotency.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains payment idempotency duplicate charge key.",
+    "expected_documents": [
+      "code/idempotency.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate claimPaymentKey.",
+    "expected_documents": [
+      "code/idempotency.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where are refresh tokens rotated and replayed tokens rejected?",
+    "expected_documents": [
+      "code/tokens.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about refresh token reuse session revocation.",
+    "expected_documents": [
+      "code/tokens.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "rotateRefreshToken: Where are refresh tokens rotated and replayed tokens rejected?",
+    "expected_documents": [
+      "code/tokens.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains refresh token reuse session revocation.",
+    "expected_documents": [
+      "code/tokens.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate rotateRefreshToken.",
+    "expected_documents": [
+      "code/tokens.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Which function parses CSV fields containing commas?",
+    "expected_documents": [
+      "code/csv.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about quoted CSV escaped field parsing.",
+    "expected_documents": [
+      "code/csv.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "parseCsvRow: Which function parses CSV fields containing commas?",
+    "expected_documents": [
+      "code/csv.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains quoted CSV escaped field parsing.",
+    "expected_documents": [
+      "code/csv.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate parseCsvRow.",
+    "expected_documents": [
+      "code/csv.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where do we reject uploads that exceed the size limit?",
+    "expected_documents": [
+      "code/uploads.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about file upload byte limit validation.",
+    "expected_documents": [
+      "code/uploads.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "validateUploadSize: Where do we reject uploads that exceed the size limit?",
+    "expected_documents": [
+      "code/uploads.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains file upload byte limit validation.",
+    "expected_documents": [
+      "code/uploads.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate validateUploadSize.",
+    "expected_documents": [
+      "code/uploads.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "How are retrieval cache keys isolated by user permissions?",
+    "expected_documents": [
+      "code/cache.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about cache principal source permissions version.",
+    "expected_documents": [
+      "code/cache.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "makeCacheKey: How are retrieval cache keys isolated by user permissions?",
+    "expected_documents": [
+      "code/cache.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains cache principal source permissions version.",
+    "expected_documents": [
+      "code/cache.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate makeCacheKey.",
+    "expected_documents": [
+      "code/cache.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where is directory traversal outside a registered root blocked?",
+    "expected_documents": [
+      "code/paths.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about registered root path traversal boundary.",
+    "expected_documents": [
+      "code/paths.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "isWithinRoot: Where is directory traversal outside a registered root blocked?",
+    "expected_documents": [
+      "code/paths.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains registered root path traversal boundary.",
+    "expected_documents": [
+      "code/paths.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate isWithinRoot.",
+    "expected_documents": [
+      "code/paths.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Which function merges lexical and vector search rankings?",
+    "expected_documents": [
+      "code/search.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about reciprocal rank fusion hybrid search.",
+    "expected_documents": [
+      "code/search.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "mergeRankings: Which function merges lexical and vector search rankings?",
+    "expected_documents": [
+      "code/search.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains reciprocal rank fusion hybrid search.",
+    "expected_documents": [
+      "code/search.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate mergeRankings.",
+    "expected_documents": [
+      "code/search.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where is the retrieval context token limit enforced?",
+    "expected_documents": [
+      "code/budget.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about context packing citation token budget.",
+    "expected_documents": [
+      "code/budget.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "packContext: Where is the retrieval context token limit enforced?",
+    "expected_documents": [
+      "code/budget.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains context packing citation token budget.",
+    "expected_documents": [
+      "code/budget.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate packContext.",
+    "expected_documents": [
+      "code/budget.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "How are duplicate filesystem watcher events handled?",
+    "expected_documents": [
+      "code/watcher.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about file watcher debounce incremental indexing.",
+    "expected_documents": [
+      "code/watcher.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "debounceFileEvents: How are duplicate filesystem watcher events handled?",
+    "expected_documents": [
+      "code/watcher.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains file watcher debounce incremental indexing.",
+    "expected_documents": [
+      "code/watcher.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate debounceFileEvents.",
+    "expected_documents": [
+      "code/watcher.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where do deleted documents get removed from both search indexes?",
+    "expected_documents": [
+      "code/deletion.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about atomic deletion lexical vector index.",
+    "expected_documents": [
+      "code/deletion.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "removeDocument: Where do deleted documents get removed from both search indexes?",
+    "expected_documents": [
+      "code/deletion.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains atomic deletion lexical vector index.",
+    "expected_documents": [
+      "code/deletion.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate removeDocument.",
+    "expected_documents": [
+      "code/deletion.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Which parser preserves Markdown heading boundaries?",
+    "expected_documents": [
+      "code/parser.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about Markdown sections code block line provenance.",
+    "expected_documents": [
+      "code/parser.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "extractMarkdownSections: Which parser preserves Markdown heading boundaries?",
+    "expected_documents": [
+      "code/parser.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains Markdown sections code block line provenance.",
+    "expected_documents": [
+      "code/parser.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate extractMarkdownSections.",
+    "expected_documents": [
+      "code/parser.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where is the service health response generated?",
+    "expected_documents": [
+      "code/health.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about health endpoint version privacy.",
+    "expected_documents": [
+      "code/health.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "getServiceHealth: Where is the service health response generated?",
+    "expected_documents": [
+      "code/health.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains health endpoint version privacy.",
+    "expected_documents": [
+      "code/health.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate getServiceHealth.",
+    "expected_documents": [
+      "code/health.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Which check protects local browser mutations from CSRF?",
+    "expected_documents": [
+      "code/csrf.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about browser session CSRF request header.",
+    "expected_documents": [
+      "code/csrf.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "verifyCsrfToken: Which check protects local browser mutations from CSRF?",
+    "expected_documents": [
+      "code/csrf.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains browser session CSRF request header.",
+    "expected_documents": [
+      "code/csrf.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate verifyCsrfToken.",
+    "expected_documents": [
+      "code/csrf.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where are hostile browser origins rejected?",
+    "expected_documents": [
+      "code/origin.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about Host Origin DNS rebinding request validation.",
+    "expected_documents": [
+      "code/origin.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "validateRequestOrigin: Where are hostile browser origins rejected?",
+    "expected_documents": [
+      "code/origin.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains Host Origin DNS rebinding request validation.",
+    "expected_documents": [
+      "code/origin.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate validateRequestOrigin.",
+    "expected_documents": [
+      "code/origin.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where is the local embedding model loaded?",
+    "expected_documents": [
+      "code/model.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about quantized ONNX CPU model cache.",
+    "expected_documents": [
+      "code/model.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "loadEmbeddingModel: Where is the local embedding model loaded?",
+    "expected_documents": [
+      "code/model.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains quantized ONNX CPU model cache.",
+    "expected_documents": [
+      "code/model.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate loadEmbeddingModel.",
+    "expected_documents": [
+      "code/model.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "What keeps a failed index update from replacing working chunks?",
+    "expected_documents": [
+      "code/transactions.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about transaction rollback atomic document chunks.",
+    "expected_documents": [
+      "code/transactions.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "commitDocumentChunks: What keeps a failed index update from replacing working chunks?",
+    "expected_documents": [
+      "code/transactions.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains transaction rollback atomic document chunks.",
+    "expected_documents": [
+      "code/transactions.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate commitDocumentChunks.",
+    "expected_documents": [
+      "code/transactions.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "How does client setup preserve existing MCP configuration?",
+    "expected_documents": [
+      "code/client-config.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about MCP configuration merge backup.",
+    "expected_documents": [
+      "code/client-config.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "mergeMcpConfiguration: How does client setup preserve existing MCP configuration?",
+    "expected_documents": [
+      "code/client-config.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains MCP configuration merge backup.",
+    "expected_documents": [
+      "code/client-config.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate mergeMcpConfiguration.",
+    "expected_documents": [
+      "code/client-config.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Where is a slow retrieval timed out?",
+    "expected_documents": [
+      "code/timeout.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about retrieval deadline retryable error.",
+    "expected_documents": [
+      "code/timeout.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "withDeadline: Where is a slow retrieval timed out?",
+    "expected_documents": [
+      "code/timeout.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains retrieval deadline retryable error.",
+    "expected_documents": [
+      "code/timeout.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate withDeadline.",
+    "expected_documents": [
+      "code/timeout.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Which function creates stable document citation URIs?",
+    "expected_documents": [
+      "code/normalize.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Find information about document URI source identifier encoding.",
+    "expected_documents": [
+      "code/normalize.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "normalizeDocumentUri: Which function creates stable document citation URIs?",
+    "expected_documents": [
+      "code/normalize.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "I need the source that explains document URI source identifier encoding.",
+    "expected_documents": [
+      "code/normalize.ts"
+    ]
+  },
+  {
+    "category": "code",
+    "query": "Locate normalizeDocumentUri.",
+    "expected_documents": [
+      "code/normalize.ts"
+    ]
+  }
+]
