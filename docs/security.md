@@ -4,7 +4,9 @@
 
 The management server binds only to `127.0.0.1`, validates its exact Host header and same-origin browser requests, and uses an installation secret protected by Windows DPAPI. CLI credentials are not accepted on the public gateway. Browser launch URLs carry a short-lived, single-use bootstrap in the fragment; the browser removes it and exchanges it for an HttpOnly SameSite session. State-changing browser operations also require a per-session CSRF header.
 
-The local Windows account is the ownership boundary. This is not a defense against malware already operating as that account or a machine administrator. Local database contents are not independently encrypted; use Windows disk encryption when that is required.
+The read-only MCP endpoint at `http://127.0.0.1:32187/mcp` intentionally accepts local clients without credentials and searches all registered knowledge folders. It shares the loopback listener's strict Host/Origin validation, bounded request body and retrieval concurrency limit. Local administration still requires authentication. Streamable HTTP transport and tool behavior are shared with the remote gateway, but the remote authorization checks are never bypassed for loopback or forwarded addresses.
+
+Unauthenticated local HTTP retrieval trusts processes on this PC, including other signed-in Windows users. The local Windows account remains the ownership boundary for administration and protected credentials. This is not a defense against malware already operating as that account or a machine administrator. Local database contents are not independently encrypted; use Windows disk encryption when that is required.
 
 Only registered roots are traversed. Symlinks/junctions below a root are skipped, source boundaries are checked before reads, and unavailable roots retain prior indexed data. Ignore rules are configurable; they are not a substitute for reviewing which folders are registered. Retrieved text is escaped and framed as untrusted evidence; no document instructions are executed.
 

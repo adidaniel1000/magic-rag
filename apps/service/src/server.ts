@@ -54,6 +54,28 @@ const close = (server: Server) =>
     server.close(() => resolve());
     server.closeAllConnections();
   });
+async function handleMcp(
+  req: Request,
+  res: Response,
+  search: Parameters<typeof createMcp>[0],
+) {
+  if (!["POST", "GET", "DELETE"].includes(req.method)) {
+    res.setHeader("Allow", "POST, GET, DELETE");
+    res.status(405).end();
+    return;
+  }
+  const mcp = createMcp(search);
+  const transport = new StreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+    enableJsonResponse: true,
+  });
+  res.on("close", () => {
+    void transport.close();
+    void mcp.close();
+  });
+  await mcp.connect(transport);
+  await transport.handleRequest(req, res, req.body);
+}
 export interface ServiceOptions {
   directory: string;
   platform: PlatformAdapter;
@@ -207,6 +229,16 @@ export async function createService(options: ServiceOptions) {
   app.use(express.json({ limit: "128kb" }));
   app.get("/health", (_req, res) =>
     res.json({ service: "secondmind", version: "0.1.0" }),
+  );
+  // This listener binds only to loopback; Host/Origin checks above still apply.
+  // Keep owner-level local retrieval separate from the authenticated gateway.
+  app.all("/mcp", (req, res) =>
+    handleMcp(req, res, (input) =>
+      retrieveBounded(
+        { id: "owner", sourceIds: "*", integration: "local-http-mcp" },
+        input,
+      ),
+    ),
   );
   app.post("/api/session", (req, res) => {
     const code = z.object({ code: z.string().max(100) }).parse(req.body).code;
@@ -545,26 +577,12 @@ export async function createService(options: ServiceOptions) {
       res.status(401).json({ error: "Authorization required." });
       return;
     }
-    if (!["POST", "GET", "DELETE"].includes(req.method)) {
-      res.status(405).end();
-      return;
-    }
-    const mcp = createMcp(async (input) => {
+    await handleMcp(req, res, async (input) => {
       const current = await auth.principal(bearer!);
       const result = await retrieveBounded(current, input);
       await auth.verifyAccessToken(bearer!);
       return result;
     });
-    const transport = new StreamableHTTPServerTransport({
-      sessionIdGenerator: undefined,
-      enableJsonResponse: true,
-    });
-    res.on("close", () => {
-      void transport.close();
-      void mcp.close();
-    });
-    await mcp.connect(transport);
-    await transport.handleRequest(req, res, req.body);
   });
   gateway.use((_req, res) => res.status(404).json({ error: "Not found." }));
   gateway.use(errors);

@@ -51,7 +51,9 @@ The release command writes `public/releases/secondmind-local-0.1.0.tgz`, `public
 
 ## Local and remote AI connections
 
-Local clients use `secondmind mcp` over stdio. The UI can preview and apply configurations for Claude Code, Claude Desktop, Codex, and Cursor. Changes require clicking **Connect**, preserve other settings, and create backups. Restart the client afterward. A configured entry is not a guarantee that the AI client has connected or will invoke retrieval automatically.
+Local clients can use **Streamable HTTP at `http://127.0.0.1:32187/mcp` without authentication**, or launch `secondmind mcp` over stdio. The local HTTP endpoint searches all registered knowledge folders and is available only on this PC; it works without a tunnel or public hostname. Connections shows the address with a copy button. Local administration still requires authentication.
+
+The UI can preview and apply stdio configurations for Claude Code, Claude Desktop, Codex, and Cursor. Changes require clicking **Connect**, preserve other settings, and create backups. Restart the client afterward. A configured entry is not a guarantee that the AI client has connected or will invoke retrieval automatically.
 
 For remote Claude/ChatGPT connections, supply your existing Cloudflare named tunnel's hostname and token in **Connections**. Install `cloudflared` separately and route the entire hostname to `http://127.0.0.1:32188`. Start the tunnel in the app, then add `https://YOUR-HOST/mcp` in your AI client. Approve its matching code and selected folders on your Windows PC. Developer clients may instead use named bearer tokens. See [integration instructions](docs/integrations.md).
 

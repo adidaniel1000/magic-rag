@@ -7,7 +7,8 @@ Verified on 2026-09-18 using Windows 11 Pro (10.0.26200), an Intel Core Ultra 5 
 | Check | Result |
 |---|---|
 | TypeScript type check and production build | Passed |
-| Unit and integration suite | 42 tests passed across four files |
+| Unit and integration suite | 44 tests passed across four files |
+| Unauthenticated local HTTP MCP | Passed: concurrent SDK clients, both search tools, operation without remote configuration, Host/Origin rejection, request-size limits, authenticated administration, and no public-gateway bypass |
 | Browser workflow | Passed in installed Google Chrome at desktop and mobile sizes |
 | Real embedding/storage smoke | Passed, including a fresh pinned-artifact download and lossless Unicode splitting |
 | Offline evaluation | Passed with remote model loading disabled |
@@ -16,7 +17,7 @@ Verified on 2026-09-18 using Windows 11 Pro (10.0.26200), an Intel Core Ultra 5 
 
 Coverage includes document formats and malformed inputs, PDF page provenance/OCR rejection, DOCX archive limits, parser-worker timeout, full long-section preservation, SQLite migrations, atomic updates/deletion, per-source permissions, source boundaries and junctions, move reuse, watcher edits/deletes, unavailable roots, restart recovery, model-version rebuilding, query-cache isolation, ranking, empty results, serialized context budgets, CSRF, hostile Host/Origin, OAuth discovery/PKCE/audience/redirects, authorization-code and refresh replay, revocation, concurrent MCP clients, stopped-service behavior, and tunnel cancellation/owned-child cleanup.
 
-Browser checks cover onboarding, cancelled folder selection through a platform test adapter, indexing status, search, configuration previews and cancellation, a tunnel configuration failure, and mobile overflow. The Windows folder dialog itself still needs a manual usability check. Client configuration tests use temporary files, including preservation, backups, and concurrent-edit protection.
+Browser checks cover onboarding, cancelled folder selection through a platform test adapter, indexing status, search, the local MCP address and clipboard copy, configuration previews and cancellation, a tunnel configuration failure, and mobile overflow. The Windows folder dialog itself still needs a manual usability check. Client configuration tests use temporary files, including preservation, backups, and concurrent-edit protection.
 
 ## Retrieval evaluation
 

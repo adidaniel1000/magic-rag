@@ -33,8 +33,9 @@ The query-vector cache contains only vectors, is bounded to 128 entries with a f
 ## Public interfaces
 
 - `secondmind [start|stop|status|mcp|hook]`, `--no-browser`, `--data-dir PATH`.
-- Local: `POST /api/v1/retrieve` (`/api/search` alias); source, settings, diagnostics, progress SSE, client configuration, tunnel, and authorization management APIs.
-- Remote gateway: `/mcp`, OAuth discovery and authorization endpoints only.
+- Local port `32187`: unauthenticated Streamable HTTP `/mcp` for local processes, with owner access to all registered folders. Exact Host and same-origin checks apply. Works without remote configuration.
+- Authenticated local APIs: `POST /api/v1/retrieve` (`/api/search` alias); source, settings, diagnostics, progress SSE, client configuration, tunnel, and authorization management APIs.
+- Remote gateway port `32188`: authenticated `/mcp`, OAuth discovery and authorization endpoints only. Both HTTP MCP endpoints use the same SDK transport handler and retrieval service; the public gateway always validates remote credentials and source scopes.
 - MCP: `second_mind_search` and `second_mind_code_search`, accepting `query`, optional `max_tokens` and `source_ids`; general search also accepts `mode`.
 
 Responses contain retrieval ID, context, reference-token count, latency, index version and result provenance. Document URIs use `secondmind://SOURCE_ID/encoded/relative/path` and are identifiers, not filesystem download endpoints.

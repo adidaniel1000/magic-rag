@@ -612,6 +612,29 @@ function App() {
               <h2>On this computer</h2>
               <span>Local connections</span>
             </div>
+            <section className="card" aria-label="Local HTTP connection">
+              <h3>Connect with a local address</h3>
+              <p>
+                Choose Streamable HTTP in your AI app and paste this address. No
+                sign-in or token is needed. Apps on this PC can search all
+                registered knowledge folders while Second Mind is running.
+              </p>
+              <p className="endpoint">
+                Local MCP address <code>{window.location.origin}/mcp</code>
+                <button
+                  onClick={() =>
+                    void run(async () => {
+                      await navigator.clipboard.writeText(
+                        window.location.origin + "/mcp",
+                      );
+                      setNotice("Local MCP address copied.");
+                    })
+                  }
+                >
+                  Copy local address
+                </button>
+              </p>
+            </section>
             <div className="client-grid">
               {clients.map((c) => (
                 <section className="card client" key={c.id}>

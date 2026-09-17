@@ -6,6 +6,7 @@ import { once } from "node:events";
 import assert from "node:assert/strict";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { WindowsPlatform } from "@secondmind/platform";
 import { freePort } from "../tests/helpers.js";
 const directory = await fs.mkdtemp(
@@ -127,6 +128,26 @@ try {
   } finally {
     await client.close();
   }
+  const httpClient = new Client({ name: "installed-http-test", version: "1" });
+  try {
+    await httpClient.connect(
+      new StreamableHTTPClientTransport(
+        new URL(`http://127.0.0.1:${port}/mcp`),
+      ),
+    );
+    const reply = await httpClient.callTool({
+      name: "second_mind_search",
+      arguments: { query: "annual enterprise discount" },
+    });
+    assert(!reply.isError);
+    assert(JSON.stringify(reply.content).includes("pricing.md"));
+    assert.equal(
+      (await fetch(`http://127.0.0.1:${port}/api/v1/sources`)).status,
+      401,
+    );
+  } finally {
+    await httpClient.close();
+  }
   await call("/internal/stop", {});
   const [exitCode] = await exited;
   assert.equal(exitCode, 0, output);
@@ -138,6 +159,7 @@ try {
     package: pkg.version,
     realModelRetrieval: true,
     stdio: true,
+    localHttpWithoutAuth: true,
     uiAssets: true,
     latency_ms: response.latency_ms,
   };

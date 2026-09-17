@@ -4,6 +4,12 @@ Start Second Mind in a terminal and keep it open. The UI's **Connections** page 
 
 ## Local MCP
 
+For an AI app that accepts an HTTP MCP address, choose **Streamable HTTP**, enter **`http://127.0.0.1:32187/mcp`**, and leave authentication disabled. No token, browser approval, public hostname, or tunnel is needed. The **Connections** page provides the address and a copy button, including the correct port if changed in settings. Second Mind must be running.
+
+This endpoint is bound to `127.0.0.1` and permits local applications to search all registered folders. It validates the exact Host and rejects foreign or null browser Origins. Local administrative APIs remain authenticated. The gateway on port `32188` and the public HTTPS endpoint continue to require OAuth or a scoped bearer token; do not route a tunnel to port `32187`.
+
+### Stdio client setup
+
 The client launches the installed Node executable and the packaged CLI with `mcp`. Use the exact snippet shown in the UI; absolute paths avoid npm command resolution problems on Windows. The shim sends retrieval to the running service and does not open the index.
 
 Supported setup targets:

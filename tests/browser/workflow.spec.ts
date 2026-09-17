@@ -39,6 +39,21 @@ test("onboarding, cancelled picker, indexing, search, configuration preview and 
   ).toBeVisible();
   await page.screenshot({ path: "artifacts/playground.png", fullPage: true });
   await page.getByRole("button", { name: "Connections", exact: true }).click();
+  const localConnection = page.getByRole("region", {
+    name: "Local HTTP connection",
+  });
+  await expect(localConnection).toContainText(
+    new URL(setup.url).origin + "/mcp",
+  );
+  await expect(localConnection).toContainText("No sign-in or token is needed.");
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page
+    .getByRole("button", { name: "Copy local address", exact: true })
+    .click();
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+    new URL(setup.url).origin + "/mcp",
+  );
+  await page.screenshot({ path: "artifacts/connections.png", fullPage: true });
   await page
     .getByRole("button", { name: "Preview connection" })
     .first()

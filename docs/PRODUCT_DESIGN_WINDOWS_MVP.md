@@ -14,7 +14,7 @@ These decisions supersede older examples and future enterprise material below.
 - Windows 11 x64 / Node.js 24.12+ (Node 24). The service remains in the foreground terminal. Browser closure does not stop it; stopping the service stops its managed tunnel. No login autostart.
 - Local-only knowledge and indexes. No cloud index, accounts, tenancy, SSO or built-in synchronization. Earlier tenant/ACL examples are future design notes, not MVP requirements.
 - SQLite/FTS5/sqlite-vec with migrations, and a pinned quantized English MiniLM model through Transformers.js. Download the model once, verify SHA-256, then load only local files.
-- Local browser/administration on loopback port 32187; separate authenticated Streamable HTTP MCP gateway on loopback port 32188, exposed optionally through an existing Cloudflare named tunnel.
+- Local browser/administration on loopback port 32187, with an unauthenticated read-only Streamable HTTP MCP endpoint at `/mcp` for applications on this PC. Administration remains authenticated; strict Host/Origin checks apply to both. Local HTTP MCP can search all registered knowledge folders and works without remote setup. Separate authenticated Streamable HTTP MCP gateway on loopback port 32188, exposed optionally through an existing Cloudflare named tunnel.
 - The user creates Cloudflare resources and supplies the hostname/token. The application manages tunnel start/stop/status and protects credentials with Windows DPAPI. The tunnel exposes only retrieval and OAuth routes.
 - Remote web clients use OAuth authorization code + PKCE, dynamic registration, and local approval of a matching code and selected folders. Developer clients may use revocable bearer tokens. Changing the public hostname invalidates remote grants.
 - Installation is a one-line PowerShell command against a configurable HTTPS setup host. The `public/` folder contains all static Cloudflare Pages setup files, the package, release manifest and checksums. Hosting is separate from the retrieval tunnel. No public npm publication is needed.
@@ -91,7 +91,7 @@ The application is distributed initially as a Node.js/npm package rather than a 
 
 The human interface is a local React web application served by the Second Mind process and opened in the user's normal browser.
 
-The AI interface is a local MCP server, preferably using `stdio` for clients that support local MCP.
+The AI interface is a local MCP server, using `stdio` or unauthenticated Streamable HTTP at `http://127.0.0.1:32187/mcp` for applications on this PC.
 
 Second Mind should remain independent of any specific LLM vendor.
 
@@ -691,7 +691,7 @@ Second Mind does not require a cloud backend for the MVP.
 
 The main interoperability mechanism is MCP.
 
-For clients supporting local MCP, use `stdio`.
+For clients supporting local MCP, use `stdio` or Streamable HTTP at `http://127.0.0.1:32187/mcp`. The local HTTP endpoint needs no credentials, searches all registered folders, and is isolated from the authenticated tunnel gateway on port 32188.
 
 Conceptually:
 
@@ -821,7 +821,7 @@ SSE/WebSocket where useful
 
 MCP:
 TypeScript MCP SDK
-stdio for local MCP clients
+stdio or loopback-only Streamable HTTP for local MCP clients
 
 Metadata/configuration:
 SQLite or equivalent embedded local database
@@ -2173,7 +2173,7 @@ The local MVP does not require a Second Mind cloud account.
 
 The local web UI is protected as a localhost application using an installation-specific session secret.
 
-MCP access is local through `stdio` or authenticated local IPC.
+MCP access is local through `stdio` (whose shim uses authenticated local IPC) or unauthenticated Streamable HTTP on the loopback-only browser port. Local HTTP retrieval trusts processes on the PC and exposes only the two read-only search tools, with strict Host/Origin validation. Local administration and the separate remote MCP gateway remain authenticated.
 
 The optional HTTPS tunnel uses OAuth approval on the Windows PC, or scoped bearer tokens, without introducing cloud accounts or changing the retrieval core.
 

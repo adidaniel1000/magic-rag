@@ -50,6 +50,10 @@ describe("HTTP and remote security", () => {
       path.join(docs, "leave.md"),
       "# Parent leave\n\nParental leave is sixteen paid weeks.",
     );
+    await fs.writeFile(
+      path.join(docs, "leave.ts"),
+      "export function parentalLeaveWeeks() { return 16; }",
+    );
     const source = await service.indexer.register(docs);
     await service.indexer.idle();
     sourceId = source.id;
@@ -133,6 +137,93 @@ describe("HTTP and remote security", () => {
       });
     expect((await request()).status).toBe(200);
     expect((await request()).status).toBe(401);
+  });
+  it("supports concurrent local HTTP clients and both search tools without credentials", async () => {
+    const clients = [
+      new Client({ name: "local-a", version: "1" }),
+      new Client({ name: "local-b", version: "1" }),
+    ];
+    try {
+      await Promise.all(
+        clients.map((client) =>
+          client.connect(
+            new StreamableHTTPClientTransport(new URL(base + "/mcp")),
+          ),
+        ),
+      );
+      for (const client of clients) {
+        expect((await client.listTools()).tools.map((t) => t.name)).toEqual([
+          "second_mind_search",
+          "second_mind_code_search",
+        ]);
+        const knowledge = await client.callTool({
+          name: "second_mind_search",
+          arguments: { query: "parent leave", max_tokens: 300 },
+        });
+        expect(knowledge.isError).not.toBe(true);
+        expect(JSON.stringify(knowledge.content)).toContain("leave.md");
+        const code = await client.callTool({
+          name: "second_mind_code_search",
+          arguments: {
+            query: "parentalLeaveWeeks",
+            max_tokens: 300,
+            source_ids: [sourceId],
+          },
+        });
+        expect(code.isError).not.toBe(true);
+        expect(JSON.stringify(code.content)).toContain("leave.ts");
+      }
+    } finally {
+      await Promise.all(clients.map((client) => client.close()));
+    }
+  });
+  it("keeps local HTTP MCP behind Host/Origin checks and request limits", async () => {
+    for (const origin of ["https://evil.example.com", "null", remote]) {
+      expect(
+        (await fetch(base + "/mcp", { headers: { Origin: origin } })).status,
+      ).toBe(403);
+    }
+    const invalidHost = await new Promise<number | undefined>(
+      (resolve, reject) => {
+        httpGet(
+          base + "/mcp",
+          { headers: { Host: "rebinding.example.com" } },
+          (response) => {
+            response.resume();
+            resolve(response.statusCode);
+          },
+        ).on("error", reject);
+      },
+    );
+    expect(invalidHost).toBe(403);
+    expect((await fetch(base + "/mcp", { method: "PUT" })).status).toBe(405);
+    expect(
+      (
+        await fetch(base + "/mcp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ padding: "x".repeat(129 * 1024) }),
+        })
+      ).status,
+    ).toBe(413);
+    for (const route of [
+      "/api/v1/sources",
+      "/api/v1/settings",
+      "/internal/stop",
+    ]) {
+      expect((await fetch(base + route, { method: "POST" })).status).toBe(401);
+    }
+    expect(
+      (
+        await fetch(remote + "/mcp", {
+          method: "POST",
+          headers: {
+            "X-Forwarded-For": "127.0.0.1",
+            "X-Forwarded-Host": new URL(base).host,
+          },
+        })
+      ).status,
+    ).toBe(401);
   });
   it("serves search aliases and bounded context; validates input", async () => {
     const response = await local("/api/search", {
@@ -382,7 +473,7 @@ describe("stdio transport", () => {
       await client.close();
     }
   });
-  it("queries a running service through the thin stdio shim", async () => {
+  it("queries a local-only service over stdio and HTTP without remote configuration", async () => {
     const directory = await temporary(),
       port = await freePort(),
       gatewayPort = await freePort();
@@ -404,6 +495,7 @@ describe("stdio transport", () => {
     await service.indexer.register(folder);
     await service.indexer.idle();
     const client = new Client({ name: "stdio-live", version: "1" });
+    const httpClient = new Client({ name: "local-http-live", version: "1" });
     try {
       await client.connect(
         new StdioClientTransport({
@@ -418,8 +510,23 @@ describe("stdio transport", () => {
       });
       expect(response.isError).not.toBe(true);
       expect(JSON.stringify(response.content)).toContain("billing.txt");
+      await httpClient.connect(
+        new StreamableHTTPClientTransport(
+          new URL(`http://127.0.0.1:${port}/mcp`),
+        ),
+      );
+      const httpResponse = await httpClient.callTool({
+        name: "second_mind_search",
+        arguments: { query: "annual billing" },
+      });
+      expect(httpResponse.isError).not.toBe(true);
+      expect(JSON.stringify(httpResponse.content)).toContain("billing.txt");
+      expect((await fetch(`http://127.0.0.1:${gatewayPort}/mcp`)).status).toBe(
+        503,
+      );
     } finally {
       await client.close();
+      await httpClient.close();
       await service.shutdown();
     }
   });
