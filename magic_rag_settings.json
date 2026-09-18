@@ -2,5 +2,7 @@
   "folders": [
     "C:\\Temp\\Obsidian\\raw\\small",
     "C:\\Temp\\Obsidian\\raw\\wikitext"
-  ]
+  ],
+  "mcp_port": 32187,
+  "ui_port": 32188
 }

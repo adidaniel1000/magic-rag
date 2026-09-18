@@ -12,6 +12,8 @@ from pathlib import Path
 
 import sqlite_vec
 
+from rag_settings import load_settings, resolve_folder
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = PROJECT_ROOT / "raw"
@@ -95,19 +97,8 @@ def cosine_similarity(left, right):
 def _source_dirs(raw_dir=None):
     if raw_dir is not None:
         return [Path(raw_dir)]
-    settings_path = PROJECT_ROOT / "magic_rag_settings.json"
-    if not settings_path.exists():
-        return [RAW_DIR]
-    settings = json.loads(settings_path.read_text(encoding="utf-8"))
-    folders = settings.get("folders", [str(RAW_DIR)])
-    if not isinstance(folders, list) or any(
-        not isinstance(folder, str) or not folder.strip() for folder in folders
-    ):
-        raise ValueError("magic_rag_settings.json 'folders' must be an array of non-empty paths.")
-    return [
-        Path(folder) if Path(folder).is_absolute() else PROJECT_ROOT / folder
-        for folder in folders
-    ]
+    folders = load_settings(PROJECT_ROOT)["folders"]
+    return [resolve_folder(folder, PROJECT_ROOT) for folder in folders]
 
 
 def iter_source_files(raw_dir=None, *, folders=None):

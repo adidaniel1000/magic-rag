@@ -37,7 +37,7 @@ itself; you do not need to run the batch launcher.
 
 Claude's **Add custom connector** URL field is for remote servers. It requires
 a public HTTPS endpoint reachable from Anthropic's cloud, so the local
-`http://127.0.0.1:8001/mcp` address cannot be added there. Changing the prefix
+`http://127.0.0.1:32187/mcp` address cannot be added there. Changing the prefix
 to `https://` will not fix this. Use the stdio configuration above for Desktop;
 Claude web/mobile require a separately hosted remote server with HTTPS and
 appropriate authentication. See [Claude's remote connector requirements](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
@@ -49,10 +49,15 @@ For Streamable HTTP, start:
 ```
 
 Then use the [HTTP MCP example](../setup/user_setup/claude_code_mcp/.claude/.mcp.json), or connect an MCP
-client to `http://127.0.0.1:8001/mcp`. This endpoint listens only on this computer
+client to `http://127.0.0.1:32187/mcp`. This endpoint listens only on this computer
 and is separate from the existing `/rag` hook API. The batch launcher defaults
-to Streamable HTTP on port 8001; pass `--port 9000` to change the port, and update
-the client URL to match. Press Ctrl+C to stop it.
+to Streamable HTTP using `mcp_port` in `magic_rag_settings.json` (default 32187);
+pass `--port 9000` for a one-time override, and update the client URL to match.
+Press Ctrl+C to stop it. Only one HTTP MCP instance may run per installation,
+even on different ports. Stdio remains independently managed by its clients.
+
+For browser controls and a query playground, see the [Web dashboard](Web%20dashboard.md).
+The dashboard starts MCP manually, and port changes take effect only after Stop → Start.
 
 Example tool arguments: `{"query": "project architecture", "top_k": 4}`.
 `query` is required and accepts up to 10,000 characters; `top_k` must be an integer
@@ -60,7 +65,8 @@ from 1 to 20, and `min_score` must be between 0 and 1. Blank queries or no match
 return an explicit no-matches message. Invalid arguments and retrieval failures
 return MCP errors. MCP searches do not write `RAG.md`.
 
-Place `.md`, `.txt`, or `.json` documents in `raw/`. The database is `index/rag.db`.
+Configure source folders in `magic_rag_settings.json`, or place `.md`, `.txt`, or
+`.json` documents in `raw/` when using the default configuration. The database is `index/rag.db`.
 It is built on the first searchable query if missing; an explicit build avoids
 making that first request wait. After adding, editing, or deleting source documents,
 rebuild it:

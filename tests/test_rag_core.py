@@ -123,6 +123,15 @@ class RagIndexTests(unittest.TestCase):
         self.assertEqual(rag.build_index()["file_count"], 0)
         self.assertEqual(rag.build_index(raw_dir=self.raw)["file_count"], 1)
 
+    def test_folder_paths_use_the_same_normalization_as_the_dashboard(self):
+        self.write("guide.txt", "architecture")
+        (self.root / "magic_rag_settings.json").write_text(
+            json.dumps({"folders": [" ~/raw "]}), encoding="utf-8",
+        )
+        with patch.dict("os.environ", {"HOME": str(self.root), "USERPROFILE": str(self.root)}):
+            self.assertEqual(rag.build_index()["file_count"], 1)
+            self.assertEqual(rag.search("architecture")[0]["path"], "raw/guide.txt")
+
     def test_invalid_folders_preserve_existing_index(self):
         self.write("guide.txt", "architecture")
         rag.build_index()

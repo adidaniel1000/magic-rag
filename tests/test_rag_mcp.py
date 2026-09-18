@@ -16,6 +16,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from rag_mcp import mcp
+from rag_platform import terminate_child
 
 
 class RagMcpTests(unittest.IsolatedAsyncioTestCase):
@@ -59,7 +60,7 @@ class RagMcpTransportTests(unittest.IsolatedAsyncioTestCase):
         self.root = Path(self.temp.name)
         (self.root / "scripts").mkdir()
         (self.root / "raw").mkdir()
-        for name in ("rag_mcp.py", "rag_core.py"):
+        for name in ("rag_mcp.py", "rag_core.py", "rag_settings.py", "rag_runtime.py"):
             shutil.copyfile(PROJECT_ROOT / "scripts" / name, self.root / "scripts" / name)
         (self.root / "raw" / "guide.txt").write_text(
             "Architecture uses a local index for retrieval. Unicode reference: café.", encoding="utf-8",
@@ -125,7 +126,7 @@ class RagMcpTransportTests(unittest.IsolatedAsyncioTestCase):
                 async with Client(f"http://127.0.0.1:{port}/mcp") as client:
                     await self.check_retrieval(client)
         finally:
-            process.terminate()
+            terminate_child(process)
             try:
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:

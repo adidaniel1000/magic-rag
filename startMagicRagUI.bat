@@ -5,5 +5,5 @@ if not exist "%RAG_PYTHON%" (
     echo Run "%~dp0setup\setup.bat" first. 1>&2
     exit /b 1
 )
-"%RAG_PYTHON%" "%~dp0scripts\rag_mcp.py" --transport streamable-http %*
+"%RAG_PYTHON%" "%~dp0scripts\rag_ui.py" %*
 exit /b %errorlevel%

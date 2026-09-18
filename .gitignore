@@ -221,3 +221,6 @@ __marimo__/
 raw/
 index/
 RAG.md
+web/node_modules/
+web/dist/
+web/*.tsbuildinfo
