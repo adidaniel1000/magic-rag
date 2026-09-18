@@ -92,13 +92,33 @@ def cosine_similarity(left, right):
     return sum(a * b for a, b in zip(left, right))
 
 
-def iter_source_files(raw_dir=None):
-    raw_dir = Path(raw_dir) if raw_dir is not None else RAW_DIR
-    if not raw_dir.exists():
-        return
-    for path in raw_dir.rglob("*"):
-        if path.is_file() and path.suffix.lower() in {".md", ".txt", ".json"}:
-            yield path
+def _source_dirs(raw_dir=None):
+    if raw_dir is not None:
+        return [Path(raw_dir)]
+    settings_path = PROJECT_ROOT / "magic_rag_settings.json"
+    if not settings_path.exists():
+        return [RAW_DIR]
+    settings = json.loads(settings_path.read_text(encoding="utf-8"))
+    folders = settings.get("folders", [str(RAW_DIR)])
+    if not isinstance(folders, list) or any(
+        not isinstance(folder, str) or not folder.strip() for folder in folders
+    ):
+        raise ValueError("magic_rag_settings.json 'folders' must be an array of non-empty paths.")
+    return [
+        Path(folder) if Path(folder).is_absolute() else PROJECT_ROOT / folder
+        for folder in folders
+    ]
+
+
+def iter_source_files(raw_dir=None, *, folders=None):
+    seen = set()
+    for folder in _source_dirs(raw_dir) if folders is None else folders:
+        for path in folder.rglob("*"):
+            if path.is_file() and path.suffix.lower() in {".md", ".txt", ".json"}:
+                resolved = path.resolve()
+                if resolved not in seen:
+                    seen.add(resolved)
+                    yield path
 
 
 def read_text(path):
@@ -223,7 +243,7 @@ def _enable_wal(db):
 
 def build_index(raw_dir=None, index_path=None, *, only_if_missing=False, progress=None):
     """Atomically rebuild from source files; return metadata, never all chunks."""
-    raw_dir = Path(raw_dir) if raw_dir is not None else RAW_DIR
+    folders = _source_dirs(raw_dir)
     index_path = Path(index_path) if index_path is not None else INDEX_PATH
     index_path.parent.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
@@ -241,7 +261,7 @@ def build_index(raw_dir=None, index_path=None, *, only_if_missing=False, progres
             _create_schema(db)
             batch = []
             entry_count = file_count = source_bytes = 0
-            for source_path in iter_source_files(raw_dir):
+            for source_path in iter_source_files(folders=folders):
                 text = read_text(source_path)
                 relative_path = _path_label(source_path)
                 file_count += 1
@@ -262,7 +282,7 @@ def build_index(raw_dir=None, index_path=None, *, only_if_missing=False, progres
                 _insert_batch(db, batch)
             db.execute("INSERT INTO chunk_terms(chunk_terms) VALUES ('optimize')")
             metadata = {
-                **_settings(), "source_dir": _path_label(raw_dir),
+                **_settings(), "source_dirs": [_path_label(folder) for folder in folders],
                 "entry_count": entry_count, "file_count": file_count,
                 "source_bytes": source_bytes,
                 "built_at": datetime.now(timezone.utc).isoformat(),

@@ -95,6 +95,46 @@ class RagIndexTests(unittest.TestCase):
                     break
             self.assertEqual(list(rag.chunk_text(" \n ".join(words))), expected)
 
+    def test_configured_folders_are_indexed_without_duplicates(self):
+        self.write("excluded.txt", "excludedword")
+        small = self.root / "small"
+        wiki = self.root / "wikitext"
+        small.mkdir()
+        (wiki / "nested").mkdir(parents=True)
+        (small / "same.txt").write_text("smallword", encoding="utf-8")
+        (wiki / "nested" / "same.md").write_text("wikiword", encoding="utf-8")
+        (wiki / "ignored.csv").write_text("ignoredword", encoding="utf-8")
+        (self.root / "magic_rag_settings.json").write_text(json.dumps({
+            "folders": [str(small), "wikitext", "wikitext/nested", str(small)],
+        }), encoding="utf-8")
+
+        metadata = rag.build_index()
+        self.assertEqual(metadata["file_count"], 2)
+        self.assertEqual(metadata["source_dirs"], ["small", "wikitext", "wikitext/nested", "small"])
+        self.assertEqual(rag.search("smallword")[0]["path"], "small/same.txt")
+        self.assertEqual(rag.search("wikiword")[0]["path"], "wikitext/nested/same.md")
+        self.assertEqual(rag.search("excludedword ignoredword"), [])
+
+    def test_explicit_raw_dir_overrides_configured_folders(self):
+        self.write("guide.txt", "architecture")
+        (self.root / "magic_rag_settings.json").write_text(
+            json.dumps({"folders": []}), encoding="utf-8",
+        )
+        self.assertEqual(rag.build_index()["file_count"], 0)
+        self.assertEqual(rag.build_index(raw_dir=self.raw)["file_count"], 1)
+
+    def test_invalid_folders_preserve_existing_index(self):
+        self.write("guide.txt", "architecture")
+        rag.build_index()
+        for folders in ("raw", [""], [123], None):
+            with self.subTest(folders=folders):
+                (self.root / "magic_rag_settings.json").write_text(
+                    json.dumps({"folders": folders}), encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "folders"):
+                    rag.build_index()
+                self.assertEqual(len(rag.search("architecture")), 1)
+
     def test_ties_follow_index_order(self):
         self.write("repeat.txt", "echo " * 320)
         rag.build_index()
