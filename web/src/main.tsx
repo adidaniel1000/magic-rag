@@ -53,6 +53,42 @@ const errorMessage = (error: unknown) =>
     ? error.message
     : "Something went wrong. Please try again.";
 
+const tabs = {
+  dashboard: {
+    label: "Dashboard",
+    eyebrow: "A LITTLE CONTEXT. A LOT MORE POSSIBILITY.",
+    title: "Your knowledge, connected.",
+    description: "Bring your folders together. Make them useful to your AI tools.",
+    icon: LayoutDashboard,
+    headingIcon: Database,
+  },
+  server: {
+    label: "MCP server",
+    eyebrow: "YOUR LOCAL CONNECTION",
+    title: "MCP server",
+    description: "Manage your server, endpoint, and port settings.",
+    icon: Server,
+    headingIcon: Server,
+  },
+  connectors: {
+    label: "Connect your tools",
+    eyebrow: "BRING YOUR KNOWLEDGE TO YOUR TOOLS",
+    title: "Connect your tools",
+    description: "Connect your AI tools to your local knowledge with MCP.",
+    icon: Plug,
+    headingIcon: Plug,
+  },
+  playground: {
+    label: "Playground",
+    eyebrow: "TRY YOUR LOCAL KNOWLEDGE",
+    title: "Ask your knowledge.",
+    description: "Send a query to MCP and see exactly what your AI tools receive.",
+    icon: FlaskConical,
+    headingIcon: FlaskConical,
+  },
+};
+type Tab = keyof typeof tabs;
+
 function Notice({
   children,
   tone = "info",
@@ -291,7 +327,7 @@ function ConnectorCard({ connector }: { connector: Connector }) {
 }
 
 function App() {
-  const [tab, setTab] = useState<"dashboard" | "playground">("dashboard");
+  const [tab, setTab] = useState<Tab>("dashboard");
   const [data, setData] = useState<Snapshot | null>(null);
   const [disconnected, setDisconnected] = useState("");
   const [actionError, setActionError] = useState("");
@@ -438,6 +474,8 @@ function App() {
   const lastBuild = data?.index.last_build;
   const validPort = (value: string) =>
     /^\d+$/.test(value) && Number(value) >= 1 && Number(value) <= 65535;
+  const currentTab = tabs[tab];
+  const HeadingIcon = currentTab.headingIcon;
 
   return (
     <div className="app-shell">
@@ -451,22 +489,20 @@ function App() {
         </a>
         <div className="nav-label">WORKSPACE</div>
         <nav aria-label="Main navigation">
-          <button
-            className={`nav-item ${tab === "dashboard" ? "selected" : ""}`}
-            aria-current={tab === "dashboard" ? "page" : undefined}
-            onClick={() => setTab("dashboard")}
-          >
-            <LayoutDashboard size={19} />
-            Dashboard
-          </button>
-          <button
-            className={`nav-item ${tab === "playground" ? "selected" : ""}`}
-            aria-current={tab === "playground" ? "page" : undefined}
-            onClick={() => setTab("playground")}
-          >
-            <FlaskConical size={19} />
-            Playground
-          </button>
+          {(Object.keys(tabs) as Tab[]).map((id) => {
+            const Icon = tabs[id].icon;
+            return (
+              <button
+                key={id}
+                className={`nav-item ${tab === id ? "selected" : ""}`}
+                aria-current={tab === id ? "page" : undefined}
+                onClick={() => setTab(id)}
+              >
+                <Icon size={19} />
+                <span>{tabs[id].label}</span>
+              </button>
+            );
+          })}
         </nav>
         <div className="sidebar-bottom">
           <div className="privacy-icon">
@@ -488,7 +524,7 @@ function App() {
         <header className="topbar">
           <div className="breadcrumbs">
             Workspace<span>/</span>
-            <strong>{tab === "dashboard" ? "Dashboard" : "Playground"}</strong>
+            <strong>{currentTab.label}</strong>
           </div>
           <span className="local-badge">
             <LockKeyhole size={13} />
@@ -498,28 +534,12 @@ function App() {
         <main>
           <div className="page-heading">
             <div>
-              <div className="eyebrow">
-                {tab === "dashboard"
-                  ? "A LITTLE CONTEXT. A LOT MORE POSSIBILITY."
-                  : "TRY YOUR LOCAL KNOWLEDGE"}
-              </div>
-              <h1>
-                {tab === "dashboard"
-                  ? "Your knowledge, connected."
-                  : "Ask your knowledge."}
-              </h1>
-              <p>
-                {tab === "dashboard"
-                  ? "Bring your folders together. Make them useful to your AI tools."
-                  : "Send a query to MCP and see exactly what your AI tools receive."}
-              </p>
+              <div className="eyebrow">{currentTab.eyebrow}</div>
+              <h1>{currentTab.title}</h1>
+              <p>{currentTab.description}</p>
             </div>
             <div className="heading-mark" aria-hidden="true">
-              {tab === "dashboard" ? (
-                <Database size={32} strokeWidth={1.3} />
-              ) : (
-                <FlaskConical size={32} strokeWidth={1.3} />
-              )}
+              <HeadingIcon size={32} strokeWidth={1.3} />
             </div>
           </div>
           {disconnected && <Notice tone="error">{disconnected}</Notice>}
@@ -636,6 +656,147 @@ function App() {
                 </div>
               </section>
 
+              <section className="card index-card">
+                <div className="card-heading">
+                  <div className="title-group">
+                    <div className="section-icon">
+                      <Database size={20} />
+                    </div>
+                    <div>
+                      <h2>Knowledge index</h2>
+                      <p>Turn your files into searchable context.</p>
+                    </div>
+                  </div>
+                  <span className={`mini-label ${indexing ? "green" : ""}`}>
+                    {indexing
+                      ? "INDEXING"
+                      : lastBuild
+                        ? "LOCAL INDEX"
+                        : "NOT BUILT YET"}
+                  </span>
+                </div>
+                <div className="index-content">
+                  <div className="index-stats">
+                    <div>
+                      <span>
+                        <FileText size={14} />
+                        {indexing ? "Files processed" : "Indexed files"}
+                      </span>
+                      <strong>
+                        {count(
+                          indexing ? data.index.files : lastBuild?.file_count,
+                        )}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>
+                        <Database size={14} />
+                        Text chunks
+                      </span>
+                      <strong>
+                        {count(
+                          indexing ? data.index.chunks : lastBuild?.entry_count,
+                        )}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>
+                        <Clock3 size={14} />
+                        {indexing ? "Elapsed" : "Build time"}
+                      </span>
+                      <strong>
+                        {indexing
+                          ? elapsed(data.index.elapsed_seconds)
+                          : lastBuild
+                            ? elapsed(lastBuild.build_seconds)
+                            : "—"}
+                      </strong>
+                    </div>
+                  </div>
+                  {indexing && (
+                    <div className="index-progress" role="status">
+                      <LoaderCircle size={16} className="spin" />
+                      <span>
+                        Building your index… Counts update as the indexer
+                        reports progress.
+                      </span>
+                    </div>
+                  )}
+                  {data.index.sources_changed && !indexing && (
+                    <Notice>
+                      Your source folders changed. Rebuild to update searchable
+                      content.
+                    </Notice>
+                  )}
+                  {data.index.state === "failed" && (
+                    <Notice tone="error">{data.index.error}</Notice>
+                  )}
+                  {data.index.metadata_error && (
+                    <Notice tone="error">
+                      The index needs attention. Rebuild it to recover.{" "}
+                      {data.index.metadata_error}
+                    </Notice>
+                  )}
+                  {!data.settings.folders.length && (
+                    <p className="field-note">
+                      No sources selected. Building will create an empty index.
+                    </p>
+                  )}
+                  <div className="index-bottom">
+                    <p>
+                      {lastBuild ? (
+                        <>
+                          Last built{" "}
+                          <strong>
+                            {new Date(lastBuild.built_at).toLocaleString(
+                              undefined,
+                              {
+                                month: "short",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "2-digit",
+                              },
+                            )}
+                          </strong>
+                        </>
+                      ) : (
+                        "Your first index is one click away."
+                      )}
+                    </p>
+                    <button
+                      className="button primary"
+                      disabled={
+                        blocked ||
+                        indexing ||
+                        data.folders.some((folder) => !folder.available)
+                      }
+                      onClick={() => act("index", "/api/index/build")}
+                    >
+                      {indexing ? (
+                        <LoaderCircle size={15} className="spin" />
+                      ) : (
+                        <RefreshCw size={15} />
+                      )}
+                      {indexing
+                        ? "Indexing…"
+                        : lastBuild
+                          ? "Rebuild index"
+                          : "Build index"}
+                    </button>
+                  </div>
+                </div>
+                <div className="card-footnote">
+                  <LockKeyhole size={14} />
+                  <span>
+                    Built locally. Existing searches stay available during
+                    rebuilds.
+                  </span>
+                </div>
+              </section>
+
+            </div>
+          ) : tab === "server" ? (
+            <div className="settings-layout">
               <section className="card server-card">
                 <div className="card-heading">
                   <div className="title-group">
@@ -788,145 +949,9 @@ function App() {
                   </details>
                 </div>
               </section>
-
-              <section className="card index-card">
-                <div className="card-heading">
-                  <div className="title-group">
-                    <div className="section-icon">
-                      <Database size={20} />
-                    </div>
-                    <div>
-                      <h2>Knowledge index</h2>
-                      <p>Turn your files into searchable context.</p>
-                    </div>
-                  </div>
-                  <span className={`mini-label ${indexing ? "green" : ""}`}>
-                    {indexing
-                      ? "INDEXING"
-                      : lastBuild
-                        ? "LOCAL INDEX"
-                        : "NOT BUILT YET"}
-                  </span>
-                </div>
-                <div className="index-content">
-                  <div className="index-stats">
-                    <div>
-                      <span>
-                        <FileText size={14} />
-                        {indexing ? "Files processed" : "Indexed files"}
-                      </span>
-                      <strong>
-                        {count(
-                          indexing ? data.index.files : lastBuild?.file_count,
-                        )}
-                      </strong>
-                    </div>
-                    <div>
-                      <span>
-                        <Database size={14} />
-                        Text chunks
-                      </span>
-                      <strong>
-                        {count(
-                          indexing ? data.index.chunks : lastBuild?.entry_count,
-                        )}
-                      </strong>
-                    </div>
-                    <div>
-                      <span>
-                        <Clock3 size={14} />
-                        {indexing ? "Elapsed" : "Build time"}
-                      </span>
-                      <strong>
-                        {indexing
-                          ? elapsed(data.index.elapsed_seconds)
-                          : lastBuild
-                            ? elapsed(lastBuild.build_seconds)
-                            : "—"}
-                      </strong>
-                    </div>
-                  </div>
-                  {indexing && (
-                    <div className="index-progress" role="status">
-                      <LoaderCircle size={16} className="spin" />
-                      <span>
-                        Building your index… Counts update as the indexer
-                        reports progress.
-                      </span>
-                    </div>
-                  )}
-                  {data.index.sources_changed && !indexing && (
-                    <Notice>
-                      Your source folders changed. Rebuild to update searchable
-                      content.
-                    </Notice>
-                  )}
-                  {data.index.state === "failed" && (
-                    <Notice tone="error">{data.index.error}</Notice>
-                  )}
-                  {data.index.metadata_error && (
-                    <Notice tone="error">
-                      The index needs attention. Rebuild it to recover.{" "}
-                      {data.index.metadata_error}
-                    </Notice>
-                  )}
-                  {!data.settings.folders.length && (
-                    <p className="field-note">
-                      No sources selected. Building will create an empty index.
-                    </p>
-                  )}
-                  <div className="index-bottom">
-                    <p>
-                      {lastBuild ? (
-                        <>
-                          Last built{" "}
-                          <strong>
-                            {new Date(lastBuild.built_at).toLocaleString(
-                              undefined,
-                              {
-                                month: "short",
-                                day: "numeric",
-                                hour: "numeric",
-                                minute: "2-digit",
-                              },
-                            )}
-                          </strong>
-                        </>
-                      ) : (
-                        "Your first index is one click away."
-                      )}
-                    </p>
-                    <button
-                      className="button primary"
-                      disabled={
-                        blocked ||
-                        indexing ||
-                        data.folders.some((folder) => !folder.available)
-                      }
-                      onClick={() => act("index", "/api/index/build")}
-                    >
-                      {indexing ? (
-                        <LoaderCircle size={15} className="spin" />
-                      ) : (
-                        <RefreshCw size={15} />
-                      )}
-                      {indexing
-                        ? "Indexing…"
-                        : lastBuild
-                          ? "Rebuild index"
-                          : "Build index"}
-                    </button>
-                  </div>
-                </div>
-                <div className="card-footnote">
-                  <LockKeyhole size={14} />
-                  <span>
-                    Built locally. Existing searches stay available during
-                    rebuilds.
-                  </span>
-                </div>
-              </section>
-
+            </div>
+          ) : tab === "connectors" ? (
+            <div className="settings-layout">
               <section className="card connectors-card">
                 <div className="card-heading">
                   <div className="title-group">
@@ -1004,9 +1029,9 @@ function App() {
                       <button
                         type="button"
                         className="text-button"
-                        onClick={() => setTab("dashboard")}
+                        onClick={() => setTab("server")}
                       >
-                        Dashboard
+                        MCP server tab
                         <ArrowRight size={13} />
                       </button>{" "}
                       before sending a query.

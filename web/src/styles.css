@@ -118,6 +118,7 @@ svg {
   text-align: left;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1.4;
 }
 .nav-item:hover {
   background: #f6f8f7;
@@ -871,6 +872,9 @@ textarea:disabled {
 .playground-layout {
   max-width: 1000px;
 }
+.settings-layout {
+  max-width: 760px;
+}
 .query-form {
   padding: 5px 25px 25px;
 }
@@ -1112,9 +1116,6 @@ textarea:disabled {
   .heading-mark {
     display: none;
   }
-  .server-card {
-    grid-row: 1;
-  }
   .server-card .card-heading {
     flex-wrap: nowrap;
   }
@@ -1156,7 +1157,8 @@ textarea:disabled {
     display: none;
   }
   nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     margin: 20px 0 10px;
   }
