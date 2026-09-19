@@ -4,8 +4,8 @@ set -euo pipefail
 
 # Parse the whole function before running commands when this file is piped to Bash.
 install_magic_rag() {
-    if ! python3 -V >/dev/null 2>&1; then
-        printf '%s\n' "Python 3 is required. Install Python with pip and make sure 'python3 -V' works in a new terminal, then rerun the installer." >&2
+    if ! python -V >/dev/null 2>&1; then
+        printf '%s\n' "Python 3 is required. Install Python with pip and make sure 'python -V' works in a new terminal, then rerun the installer." >&2
         exit 1
     fi
     local install_dir="${MAGIC_RAG_INSTALL_DIR:-$PWD/magic-rag}"

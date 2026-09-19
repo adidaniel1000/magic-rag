@@ -9,8 +9,8 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
 fi
 node -e "if (Number(process.versions.node.split('.')[0]) < 22 || (Number(process.versions.node.split('.')[0]) === 22 && Number(process.versions.node.split('.')[1]) < 12)) { console.error('Node.js 22.12+ is required.'); process.exit(1); }"
 
-python3 -m pip install -r "$rag_root/setup/requirements.txt"
-python3 "$rag_root/setup/verify_sqlite.py"
+python -m pip install -r "$rag_root/setup/requirements.txt"
+python "$rag_root/setup/verify_sqlite.py"
 
 cd -- "$rag_root/web"
 npm ci

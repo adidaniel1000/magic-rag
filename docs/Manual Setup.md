@@ -5,7 +5,7 @@ Run these commands in Linux / Windows terminal.
 ## Prerequisites
 
 - Git and GitHub CLI (`gh`) available on your PATH.
-- Python 3 with pip, available as `python3` on PATH (`python3 -V` must work). SQLite 3.41+ with FTS5 and extension loading is required; the verification command below checks this.
+- Python 3 with pip, available as `python` on PATH (`python -V` must work). SQLite 3.41+ with FTS5 and extension loading is required; the verification command below checks this.
 - Node.js 22.12+ with npm available on your PATH.
 
 ## Install
@@ -15,8 +15,8 @@ Open a terminal in the directory where you want to clone the project. Run each c
 ```cmd
 gh repo clone adidaniel1000/magic-rag
 cd magic-rag
-python3 -m pip install -r setup/requirements.txt
-python3 setup/verify_sqlite.py
+python -m pip install -r setup/requirements.txt
+python setup/verify_sqlite.py
 cd web 
 npm ci
 npm run build
@@ -30,7 +30,7 @@ The SQLite check should report that FTS5 and sqlite-vec are verified. The fronte
 From the `magic-rag` directory, run:
 
 ```cmd
-python3 scripts/rag_ui.py
+python scripts/rag_ui.py
 ```
 
 The dashboard opens in your browser at `http://127.0.0.1:32188` by default. If you have changed the port in `magic_rag_settings.json`, use the URL printed in terminal.

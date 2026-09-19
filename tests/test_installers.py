@@ -30,7 +30,7 @@ def record(stage, args=()):
 
 if __name__ == "__main__":
     name, *args = sys.argv[1:]
-    if name == "python3":
+    if name == "python":
         if args == ["-V"]:
             record("python-version", args)
         else:
@@ -88,7 +88,7 @@ class InstallerFixture:
         (self.root / "installer_driver.py").write_text(DRIVER, encoding="utf-8")
         fake_bin = self.root / "fake bin"
         fake_bin.mkdir()
-        for name in ("node", "npm", "python3"):
+        for name in ("node", "npm", "python"):
             if self.shell == "powershell":
                 script = fake_bin / (name + ".cmd")
                 script.write_text(
@@ -151,7 +151,7 @@ class InstallerFixture:
             return self.run_command([POWERSHELL, "-NoProfile", "-Command", "Invoke-Expression $env:INSTALL_TEST_SCRIPT"])
         return self.run_command([BASH], input=contents)
 
-    def test_setup_uses_python3_from_another_directory(self):
+    def test_setup_uses_python_from_another_directory(self):
         self.prepare_setup()
         self.assert_success(self.run_setup())
         self.assertEqual(self.stages(), ["node", "pip", "sqlite", "ci", "build"])
@@ -231,23 +231,23 @@ class InstallerFixture:
         self.assertNotEqual(self.run_wrapper().returncode, 0)
         self.assertEqual(self.stages(), ["python-version"])
 
-    def test_wrapper_aborts_before_clone_when_python3_fails(self):
+    def test_wrapper_aborts_before_clone_when_python_fails(self):
         self.env["INSTALL_TEST_FAIL"] = "python-version"
         result = self.run_wrapper()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("Python 3 is required", result.stdout + result.stderr)
-        self.assertIn("python3 -V", result.stdout + result.stderr)
+        self.assertIn("python -V", result.stdout + result.stderr)
         self.assertEqual(self.stages(), ["python-version"])
         self.assertFalse((self.root / "magic-rag").exists())
 
-    def test_wrapper_aborts_before_clone_when_python3_is_missing(self):
+    def test_wrapper_aborts_before_clone_when_python_is_missing(self):
         fake_bin = self.root / "fake bin"
-        (fake_bin / ("python3.cmd" if self.shell == "powershell" else "python3")).unlink()
+        (fake_bin / ("python.cmd" if self.shell == "powershell" else "python")).unlink()
         self.env["PATH"] = str(fake_bin)
         result = self.run_wrapper()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("Python 3 is required", result.stdout + result.stderr)
-        self.assertIn("python3 -V", result.stdout + result.stderr)
+        self.assertIn("python -V", result.stdout + result.stderr)
         self.assertEqual(self.stages(), [])
         self.assertFalse((self.root / "magic-rag").exists())
 

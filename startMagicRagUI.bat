@@ -1,4 +1,4 @@
 @echo off
 setlocal
-call python3 "%~dp0scripts\rag_ui.py" %*
+call python "%~dp0scripts\rag_ui.py" %*
 exit /b %errorlevel%

@@ -4,10 +4,10 @@
     $ErrorActionPreference = "Stop"
     try {
         try {
-            & python3 -V *> $null
-            if ($LASTEXITCODE -ne 0) { throw "python3 failed." }
+            & python -V *> $null
+            if ($LASTEXITCODE -ne 0) { throw "python failed." }
         } catch {
-            throw "Python 3 is required. Install Python with pip and make sure 'python3 -V' works in a new terminal, then rerun the installer."
+            throw "Python 3 is required. Install Python with pip and make sure 'python -V' works in a new terminal, then rerun the installer."
         }
         $installDir = if ($env:MAGIC_RAG_INSTALL_DIR) {
             $env:MAGIC_RAG_INSTALL_DIR

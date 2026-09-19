@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "magic-rag": {
-      "command": "python3",
+      "command": "python",
       "args": ["C:\\projects\\magic-rag\\scripts\\rag_mcp.py", "--transport", "stdio"]
     }
   }

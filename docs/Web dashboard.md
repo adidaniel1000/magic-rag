@@ -13,7 +13,7 @@ Install Python with SQLite/FTS5 support and Node.js 22.12+ (or Node.js 24+), the
 .\startMagicRagUI.bat
 ```
 
-Setup installs Python packages with `python3 -m pip`, installs the locked frontend
+Setup installs Python packages with `python -m pip`, installs the locked frontend
 dependencies, and builds the React app. The launcher opens
 `http://127.0.0.1:32188` in your browser. Keep its console open; Ctrl+C shuts down
 the dashboard and the MCP/indexer processes it started. Closing a browser tab
@@ -87,7 +87,7 @@ cd web
 npm ci
 npm run build
 cd ..
-python3 -m unittest discover -s tests -v
+python -m unittest discover -s tests -v
 ```
 
 Refresh the browser after rebuilding. Node is needed for building, not for

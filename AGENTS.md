@@ -12,12 +12,12 @@
 
 Run from the repository root in PowerShell unless specified:
 
-- `.\setup\setup.bat` installs dependencies with `python3 -m pip`, verifies SQLite support, and builds the dashboard. Install Python with SQLite/FTS5 as `python3` on PATH and Node.js 22.12+ first.
+- `.\setup\setup.bat` installs dependencies with `python -m pip`, verifies SQLite support, and builds the dashboard. Install Python with SQLite/FTS5 as `python` on PATH and Node.js 22.12+ first.
 - `.\startMagicRagUI.bat` serves the dashboard at `http://127.0.0.1:32188` by default.
 - `.\startMagicRagMcp.bat` starts the local HTTP MCP endpoint; add `--transport stdio` for client-managed operation.
 - `.\build_index.bat` rebuilds the index from configured source folders.
 - In `web/`, run `npm ci` to install locked dependencies, `npm run typecheck` to check TypeScript, and `npm run build` to check and compile. Refresh the dashboard after rebuilding.
-- `python3 -m unittest discover -s tests -v` runs the Python suite.
+- `python -m unittest discover -s tests -v` runs the Python suite.
 
 ## Coding Style & Naming Conventions
 

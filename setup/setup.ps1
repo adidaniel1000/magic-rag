@@ -17,8 +17,8 @@ try {
     }
     Invoke-SetupCommand node @("-e", "if (Number(process.versions.node.split('.')[0]) < 22 || (Number(process.versions.node.split('.')[0]) === 22 && Number(process.versions.node.split('.')[1]) < 12)) { console.error('Node.js 22.12+ is required.'); process.exit(1); }")
 
-    Invoke-SetupCommand python3 @("-m", "pip", "install", "-r", (Join-Path $PSScriptRoot "requirements.txt"))
-    Invoke-SetupCommand python3 @((Join-Path $PSScriptRoot "verify_sqlite.py"))
+    Invoke-SetupCommand python @("-m", "pip", "install", "-r", (Join-Path $PSScriptRoot "requirements.txt"))
+    Invoke-SetupCommand python @((Join-Path $PSScriptRoot "verify_sqlite.py"))
 
     Push-Location -LiteralPath (Join-Path $ragRoot "web")
     try {
