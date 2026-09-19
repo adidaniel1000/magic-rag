@@ -1,4 +1,4 @@
-# Usage: powershell -c "irm https://raw.githubusercontent.com/adidaniel1000/magic-rag/refs/heads/main/setup/wrapper/install.ps1 | iex"
+# Run in PowerShell: irm https://raw.githubusercontent.com/adidaniel1000/magic-rag/refs/heads/main/setup/wrapper/install.ps1 | iex
 # A child scope also works with Invoke-Expression, where PSScriptRoot is empty.
 & {
     $ErrorActionPreference = "Stop"
@@ -33,9 +33,16 @@
 
         Push-Location -LiteralPath $installDir
         try {
-            # Bypass applies only to this setup process, not the user's saved policy.
-            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup\setup.ps1
-            if ($LASTEXITCODE -ne 0) { throw "Setup failed (exit code $LASTEXITCODE)." }
+            # Use the current PowerShell session instead of launching another executable.
+            # Match the former child process's policy only while setup runs.
+            $previousPolicy = $env:PSExecutionPolicyPreference
+            try {
+                $env:PSExecutionPolicyPreference = "Bypass"
+                & .\setup\setup.ps1
+                if ($LASTEXITCODE -ne 0) { throw "Setup failed (exit code $LASTEXITCODE)." }
+            } finally {
+                $env:PSExecutionPolicyPreference = $previousPolicy
+            }
             Write-Host "Starting Magic RAG. Keep this terminal open; press Ctrl+C to stop."
             & .\startMagicRagUI.bat
             if ($LASTEXITCODE -ne 0) { throw "Dashboard exited with code $LASTEXITCODE." }
@@ -43,7 +50,6 @@
             Pop-Location
         }
     } catch {
-        Write-Error $_ -ErrorAction Continue
-        exit 1
+        throw "Magic RAG installation failed: $($_.Exception.Message)"
     }
 }

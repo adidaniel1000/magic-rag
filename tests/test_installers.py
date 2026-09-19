@@ -142,13 +142,28 @@ class InstallerFixture:
             f"url.{remote.as_uri()}.insteadOf", "https://github.com/adidaniel1000/magic-rag.git",
         ]))
 
-    def run_wrapper(self):
+    def run_wrapper(self, handle_error=False):
         suffix = "ps1" if self.shell == "powershell" else "sh"
         contents = (PROJECT_ROOT / "setup/wrapper" / f"install.{suffix}").read_text(encoding="utf-8")
         if self.shell == "powershell":
             # Like irm | iex: execute text with no script path/PSScriptRoot.
             self.env["INSTALL_TEST_SCRIPT"] = contents
-            return self.run_command([POWERSHELL, "-NoProfile", "-Command", "Invoke-Expression $env:INSTALL_TEST_SCRIPT"])
+            command = (
+                'function powershell.exe { throw "Nested PowerShell launch is blocked." }; '
+                'Invoke-Expression $env:INSTALL_TEST_SCRIPT'
+            )
+            if handle_error:
+                command = (
+                    '$beforeLocation = (Get-Location).Path; '
+                    '$beforeErrorAction = $ErrorActionPreference; '
+                    '$beforePolicy = $env:PSExecutionPolicyPreference; '
+                    'try { ' + command + ' } catch { Write-Output $_.Exception.Message }; '
+                    'if ((Get-Location).Path -ne $beforeLocation) { throw "Location changed." }; '
+                    'if ($ErrorActionPreference -ne $beforeErrorAction) { throw "Error preference changed." }; '
+                    'if ($env:PSExecutionPolicyPreference -ne $beforePolicy) { throw "Process policy changed." }; '
+                    'Write-Output "Caller session preserved."'
+                )
+            return self.run_command([POWERSHELL, "-NoProfile", "-Command", command])
         return self.run_command([BASH], input=contents)
 
     def test_setup_uses_python_from_another_directory(self):
@@ -255,6 +270,19 @@ class InstallerFixture:
 @unittest.skipUnless(POWERSHELL and shutil.which("git"), "Windows PowerShell and Git are required")
 class PowerShellInstallerTests(InstallerFixture, unittest.TestCase):
     shell = "powershell"
+
+    def test_wrapper_restores_session_after_setup_success_or_failure(self):
+        self.prepare_remote()
+        for failure in ("", "setup"):
+            with self.subTest(failure=failure):
+                self.env["INSTALL_TEST_FAIL"] = failure
+                self.env["MAGIC_RAG_INSTALL_DIR"] = str(self.root / ("failed install" if failure else "successful install"))
+                self.log.unlink(missing_ok=True)
+                result = self.run_wrapper(handle_error=True)
+                self.assert_success(result)
+                self.assertIn("Caller session preserved.", result.stdout)
+                expected = ["python-version", "setup"] + ([] if failure else ["ui"])
+                self.assertEqual(self.stages(), expected)
 
 
 @unittest.skipUnless(BASH and shutil.which("git"), "Bash and Git are required")
