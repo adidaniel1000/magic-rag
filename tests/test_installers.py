@@ -20,10 +20,7 @@ BASH = str(GIT_BASH) if os.name == "nt" and GIT_BASH.is_file() else shutil.which
 DRIVER = r'''
 import json
 import os
-from pathlib import Path
-import shlex
 import sys
-import venv
 
 def record(stage, args=()):
     with open(os.environ["INSTALL_TEST_LOG"], "a", encoding="utf-8") as log:
@@ -33,22 +30,11 @@ def record(stage, args=()):
 
 if __name__ == "__main__":
     name, *args = sys.argv[1:]
-    if name in ("py", "python3", "python"):
-        record("venv", args)
-        target = Path(args[-1])
-        if os.environ["INSTALL_TEST_SHELL"] == "powershell":
-            venv.EnvBuilder(with_pip=False).create(target)
+    if name == "python3":
+        if args == ["-V"]:
+            record("python-version", args)
         else:
-            executable = target / "bin/python"
-            executable.parent.mkdir(parents=True)
-            executable.write_text(
-                "#!/usr/bin/env bash\nexec " + shlex.quote(sys.executable.replace("\\", "/"))
-                + " " + shlex.quote(__file__.replace("\\", "/")) + ' venv-python "$@"\n',
-                encoding="utf-8",
-            )
-            executable.chmod(0o755)
-    elif name == "venv-python":
-        record("pip" if args[:2] == ["-m", "pip"] else "sqlite" if args[0].endswith("verify_sqlite.py") else "ui", args)
+            record("pip" if args[:2] == ["-m", "pip"] else "sqlite" if args[0].endswith("verify_sqlite.py") else "ui", args)
     elif name == "npm":
         record("ci" if args == ["ci"] else "build", args)
     else:
@@ -71,12 +57,11 @@ class InstallerFixture:
         self.env.pop("INSTALL_TEST_FAIL", None)
         self.env.update({
             "INSTALL_TEST_LOG": str(self.log),
-            "INSTALL_TEST_SHELL": self.shell,
-            "PYTHONPATH": str(self.root),
             "PYTHONUTF8": "1",
             "GIT_CONFIG_GLOBAL": str(self.root / "gitconfig"),
             "GIT_CONFIG_NOSYSTEM": "1",
         })
+        self.prepare_commands()
 
     def run_command(self, command, **kwargs):
         return subprocess.run(command, cwd=self.root, env=self.env, text=True,
@@ -98,17 +83,12 @@ class InstallerFixture:
             shutil.copyfile(PROJECT_ROOT / "setup" / name, self.checkout / "setup" / name)
         for name in ("startMagicRagUI.sh", "startMagicRagUI.bat"):
             shutil.copyfile(PROJECT_ROOT / name, self.checkout / name)
+
+    def prepare_commands(self):
         (self.root / "installer_driver.py").write_text(DRIVER, encoding="utf-8")
-        (self.root / "pip.py").write_text("from installer_driver import record\nrecord('pip')\n", encoding="utf-8")
-        (self.checkout / "setup/verify_sqlite.py").write_text(
-            "from installer_driver import record\nrecord('sqlite')\n", encoding="utf-8",
-        )
-        (self.checkout / "scripts/rag_ui.py").write_text(
-            "import sys\nfrom installer_driver import record\nrecord('ui', sys.argv[1:])\n", encoding="utf-8",
-        )
         fake_bin = self.root / "fake bin"
         fake_bin.mkdir()
-        for name in ("node", "npm", "py", "python3", "python"):
+        for name in ("node", "npm", "python3"):
             if self.shell == "powershell":
                 script = fake_bin / (name + ".cmd")
                 script.write_text(
@@ -171,24 +151,25 @@ class InstallerFixture:
             return self.run_command([POWERSHELL, "-NoProfile", "-Command", "Invoke-Expression $env:INSTALL_TEST_SCRIPT"])
         return self.run_command([BASH], input=contents)
 
-    def test_setup_creates_and_reuses_environment_from_another_directory(self):
+    def test_setup_uses_python3_from_another_directory(self):
         self.prepare_setup()
         self.assert_success(self.run_setup())
-        self.assertEqual(self.stages(), ["node", "venv", "pip", "sqlite", "ci", "build"])
+        self.assertEqual(self.stages(), ["node", "pip", "sqlite", "ci", "build"])
         commands = [json.loads(line) for line in self.log.read_text().splitlines()]
         self.assertEqual(Path(commands[-1]["cwd"]), self.checkout / "web")
+        self.assertEqual(commands[1]["args"][:4], ["-m", "pip", "install", "-r"])
+        self.assertEqual(Path(commands[1]["args"][4]), self.checkout / "setup/requirements.txt")
+        self.assertEqual(Path(commands[2]["args"][0]), self.checkout / "setup/verify_sqlite.py")
+        self.assertFalse((self.checkout / "index/.venv").exists())
         self.log.unlink()
         self.assert_success(self.run_setup())
         self.assertEqual(self.stages(), ["node", "pip", "sqlite", "ci", "build"])
 
     def test_setup_stops_at_each_failed_stage(self):
         self.prepare_setup()
-        stages = ["node", "venv", "pip", "sqlite", "ci", "build"]
+        stages = ["node", "pip", "sqlite", "ci", "build"]
         for stage in stages:
             with self.subTest(stage=stage):
-                venv_dir = self.checkout / "index/.venv"
-                if venv_dir.exists():
-                    shutil.rmtree(venv_dir)
                 self.log.unlink(missing_ok=True)
                 self.env["INSTALL_TEST_FAIL"] = stage
                 result = self.run_setup()
@@ -201,18 +182,18 @@ class InstallerFixture:
             command = [os.environ["COMSPEC"], "/d", "/c", str(self.checkout / "startMagicRagUI.bat")]
         else:
             command = [BASH, str(self.checkout / "startMagicRagUI.sh")]
-        self.assertNotEqual(self.run_command(command).returncode, 0)
-        self.assert_success(self.run_setup())
+        self.assert_success(self.run_command(command))
         self.env["INSTALL_TEST_FAIL"] = "ui"
         result = self.run_command(command + ["--no-browser", "--port", "32190"])
         self.assertEqual(result.returncode, 17, result.stdout + result.stderr)
         last = json.loads(self.log.read_text().splitlines()[-1])
         self.assertEqual(last["args"][-3:], ["--no-browser", "--port", "32190"])
+        self.assertEqual(Path(last["args"][0]), self.checkout / "scripts/rag_ui.py")
 
     def test_piped_wrapper_clones_sets_up_and_launches(self):
         self.prepare_remote()
         self.assert_success(self.run_wrapper())
-        self.assertEqual(self.stages(), ["setup", "ui"])
+        self.assertEqual(self.stages(), ["python-version", "setup", "ui"])
         self.assertTrue((self.root / "magic-rag/.git").is_dir())
 
     def test_wrapper_honors_custom_destination_and_preserves_existing_files(self):
@@ -226,20 +207,20 @@ class InstallerFixture:
         result = self.run_wrapper()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("already exists", result.stdout + result.stderr)
-        self.assertEqual(self.stages(), [])
+        self.assertEqual(self.stages(), ["python-version"])
         self.assertEqual(marker.read_text(), "user data")
 
     def test_wrapper_does_not_launch_after_setup_failure(self):
         self.prepare_remote()
         self.env["INSTALL_TEST_FAIL"] = "setup"
         self.assertNotEqual(self.run_wrapper().returncode, 0)
-        self.assertEqual(self.stages(), ["setup"])
+        self.assertEqual(self.stages(), ["python-version", "setup"])
 
     def test_wrapper_reports_launcher_failure(self):
         self.prepare_remote()
         self.env["INSTALL_TEST_FAIL"] = "ui"
         self.assertNotEqual(self.run_wrapper().returncode, 0)
-        self.assertEqual(self.stages(), ["setup", "ui"])
+        self.assertEqual(self.stages(), ["python-version", "setup", "ui"])
 
     def test_wrapper_does_not_run_setup_after_clone_failure(self):
         self.assert_success(self.run_command([
@@ -248,7 +229,27 @@ class InstallerFixture:
             "https://github.com/adidaniel1000/magic-rag.git",
         ]))
         self.assertNotEqual(self.run_wrapper().returncode, 0)
+        self.assertEqual(self.stages(), ["python-version"])
+
+    def test_wrapper_aborts_before_clone_when_python3_fails(self):
+        self.env["INSTALL_TEST_FAIL"] = "python-version"
+        result = self.run_wrapper()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Python 3 is required", result.stdout + result.stderr)
+        self.assertIn("python3 -V", result.stdout + result.stderr)
+        self.assertEqual(self.stages(), ["python-version"])
+        self.assertFalse((self.root / "magic-rag").exists())
+
+    def test_wrapper_aborts_before_clone_when_python3_is_missing(self):
+        fake_bin = self.root / "fake bin"
+        (fake_bin / ("python3.cmd" if self.shell == "powershell" else "python3")).unlink()
+        self.env["PATH"] = str(fake_bin)
+        result = self.run_wrapper()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Python 3 is required", result.stdout + result.stderr)
+        self.assertIn("python3 -V", result.stdout + result.stderr)
         self.assertEqual(self.stages(), [])
+        self.assertFalse((self.root / "magic-rag").exists())
 
 
 @unittest.skipUnless(POWERSHELL and shutil.which("git"), "Windows PowerShell and Git are required")

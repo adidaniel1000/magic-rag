@@ -1,6 +1,6 @@
 ## Local RAG hook API
 
-Run `setup\setup.bat` once to install dependencies under `index/.venv/`, then
+Run `setup\setup.bat` once to install dependencies with `python3 -m pip`, then
 `build_index.bat` to populate `index/rag.db`. Start the server from the project
 directory in PowerShell:
 
@@ -8,7 +8,7 @@ directory in PowerShell:
 startMagicRag.bat
 ```
 
-You can also use `index\.venv\Scripts\python.exe scripts/rag.py --serve --port 8000`.
+You can also use `python3 scripts/rag.py --serve --port 8000`.
 Keep the terminal open; press Ctrl+C to stop the server. It listens only on this computer.
 
 To test from a browser, open:
@@ -44,8 +44,8 @@ if retrieval takes longer on your machine, increase that value in your active ho
 configuration. A logged HTTP 200 records the response status, but does not guarantee
 the client received the response.
 
-All launchers use `index/.venv/` and accept extra command-line arguments, such as
+All launchers use `python3` from `PATH` and accept extra command-line arguments, such as
 `startMagicRag.bat --port 9000`. The [stdin hook example](../setup/user_setup/claude_code_hook_python/.claude/settings.json)
-also uses this environment; adjust its absolute paths if the project is moved.
+should also use `python3`; adjust its absolute paths if the project is moved.
 Rebuild after source changes. SQLite searches use indexed keyword candidates and
 the original ranking formula; the legacy JSON index is no longer used.

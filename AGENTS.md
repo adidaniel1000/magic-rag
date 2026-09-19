@@ -6,18 +6,18 @@
 - `web/src/` contains the React/TypeScript dashboard and CSS; `web/public/` holds static assets. Vite outputs to `web/dist/`.
 - `tests/` covers retrieval, HTTP hooks, MCP transports, and dashboard behavior.
 - `setup/` contains dependency installation, SQLite verification, and client configuration examples; `docs/` contains API and operational guides.
-- `index/` stores generated databases, runtime state, and the Python environment. `raw/` is the default document source.
+- `index/` stores generated databases and runtime state. `raw/` is the default document source.
 
 ## Build, Test, and Development Commands
 
 Run from the repository root in PowerShell unless specified:
 
-- `.\setup\setup.bat` creates `index/.venv`, installs dependencies, verifies SQLite support, and builds the dashboard. Install Python with SQLite/FTS5 and Node.js 22.12+ first.
+- `.\setup\setup.bat` installs dependencies with `python3 -m pip`, verifies SQLite support, and builds the dashboard. Install Python with SQLite/FTS5 as `python3` on PATH and Node.js 22.12+ first.
 - `.\startMagicRagUI.bat` serves the dashboard at `http://127.0.0.1:32188` by default.
 - `.\startMagicRagMcp.bat` starts the local HTTP MCP endpoint; add `--transport stdio` for client-managed operation.
 - `.\build_index.bat` rebuilds the index from configured source folders.
 - In `web/`, run `npm ci` to install locked dependencies, `npm run typecheck` to check TypeScript, and `npm run build` to check and compile. Refresh the dashboard after rebuilding.
-- `.\index\.venv\Scripts\python.exe -m unittest discover -s tests -v` runs the Python suite.
+- `python3 -m unittest discover -s tests -v` runs the Python suite.
 
 ## Coding Style & Naming Conventions
 

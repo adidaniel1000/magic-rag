@@ -1,9 +1,9 @@
 # reindex
-python scripts/index_rag.py
+python3 scripts/index_rag.py
 
 # start hook agent
-python scripts/rag.py --serve --port 8000
+python3 scripts/rag.py --serve --port 8000
 
 # start mcp 
-python scripts/rag_mcp.py --transport streamable-http %*
+python3 scripts/rag_mcp.py --transport streamable-http %*
 

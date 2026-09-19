@@ -16,8 +16,8 @@ FTS5 (current Python 3.12+ installations are suitable). From the project directo
 .\build_index.bat
 ```
 
-Setup creates `index/.venv/`, installs the pinned SQLite vector extension and MCP
-dependencies there, and checks FTS5 and vector operations. Python supplies SQLite;
+Setup uses `python3 -m pip` to install the pinned SQLite vector extension and MCP
+dependencies, and checks FTS5 and vector operations. Python supplies SQLite;
 no database server is required. Setup can be rerun and does not rebuild documents.
 
 For a local MCP client, merge the `mcpServers` entry in
@@ -93,7 +93,7 @@ exactly on a score threshold.
 The former `index/vector_index.json` is retained but is no longer read or updated.
 Source edits require a full rebuild; there is no background file watcher.
 
-Run tests with `index\.venv\Scripts\python.exe -m unittest discover -s tests -v`.
-Run `index\.venv\Scripts\python.exe scripts/benchmark_rag.py` for repeatable
+Run tests with `python3 -m unittest discover -s tests -v`.
+Run `python3 scripts/benchmark_rag.py` for repeatable
 fresh-process and warm query timings; it uses the existing database and never
 rebuilds it.

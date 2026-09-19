@@ -44,7 +44,7 @@ launchers were checked from outside the project directory.
 To repeat the benchmark from the project directory:
 
 ```powershell
-index\.venv\Scripts\python.exe scripts\benchmark_rag.py --output index\benchmark.json
+python3 scripts\benchmark_rag.py --output index\benchmark.json
 ```
 
 The generated report includes individual queries, candidate counts, and timings.
